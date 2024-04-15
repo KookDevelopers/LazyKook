@@ -4,4 +4,4 @@
 
 
 ### 讨论
-加入[频道](https://kook.top/CRjuGs)一起讨论更多支持
+加入[频道](https://kook.top/IO8ZBE)一起讨论更多支持
