@@ -6,9 +6,14 @@ package me.huanmeng.lazykook.config
  * @author huanmeng_qwq
  */
 data class BotConfig(
-    var token: String? = null,
-    var mode: SocketMode = SocketMode.WEBSOCKET,
-    var webhook: WebHookConfig? = null,
+    val token: String,
+    val httpConfig: HttpConfig = HttpConfig(),
+    val mode: SocketMode = SocketMode.WEBSOCKET,
+    val webhook: WebHookConfig? = null,
+)
+
+data class HttpConfig(
+    val url: String = "https://www.kookapp.cn/api",
 )
 
 enum class SocketMode(vararg alias: String) {
@@ -19,7 +24,7 @@ enum class SocketMode(vararg alias: String) {
     val alias: List<String> = alias.toList()
 
     companion object {
-        fun getByAlias(alias: String): SocketMode? {
+        fun find(alias: String): SocketMode? {
             return entries.firstOrNull { it.name.lowercase() == alias.lowercase() || it.alias.contains(alias.lowercase()) }
         }
     }

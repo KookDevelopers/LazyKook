@@ -12,5 +12,21 @@ class LazyKook(val config: BotConfig) {
     val http: KHttp = KHttp(this)
     val isOnline: Boolean
         get() = TODO()
+    var isRunning: Boolean = false
 
+    fun start() {
+        if (isRunning) {
+            return
+        }
+        isRunning = true
+        TODO()
+    }
+
+    fun stop() {
+        if (!isRunning) {
+            return
+        }
+        isRunning = false
+        TODO()
+    }
 }
