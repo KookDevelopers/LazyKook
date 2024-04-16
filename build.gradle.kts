@@ -14,7 +14,7 @@ repositories {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     implementation("com.github.SNWCreations:JKook:0.50.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.+")
     implementation("ch.qos.logback:logback-classic:1.4.14")
 
     implementation("io.ktor:ktor-server-core-jvm")
