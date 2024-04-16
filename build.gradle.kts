@@ -15,6 +15,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     implementation("com.github.SNWCreations:JKook:0.50.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation("ch.qos.logback:logback-classic:1.4.14")
 
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
