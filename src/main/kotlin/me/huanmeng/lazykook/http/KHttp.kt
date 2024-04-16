@@ -17,12 +17,9 @@ import okhttp3.Request
  * LazyKook<br>
  * @author huanmeng_qwq
  */
-@OptIn(ExperimentalStdlibApi::class)
 class KHttp(private val kook: LazyKook) {
     private val client = OkHttpClient.Builder().build()
-    val moshi = Moshi.Builder()
-        .addLast(KotlinJsonAdapterFactory())
-        .build()
+    val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 
     private val rootResponseAdapter = moshi.adapter(RootResponse::class.java)
     private val stringAdapter = moshi.adapter(Any::class.java)
@@ -62,19 +59,12 @@ class KHttp(private val kook: LazyKook) {
         val respAdapter = moshi.adapter(apiRouter.responseClass)
         val params = reqAdapter.toJsonValue(request)
 
-        @Suppress("UNCHECKED_CAST")
-        val map = params as MutableMap<String, Any>
+        @Suppress("UNCHECKED_CAST") val map = params as MutableMap<String, Any>
         val responseJson = when (apiRouter.apiMethod) {
-            GET -> {
-                get(apiRouter.buildPath(), *map.toPairs())
-            }
-
-            POST -> {
-                post(apiRouter.buildPath(), *map.toPairs())
-            }
-        }
-        val response = rootResponseAdapter.fromJson(responseJson)
-            ?: throw RuntimeException(responseJson)
+            GET -> this::get
+            POST -> this::post
+        }(apiRouter.buildPath(), map.toPairs())
+        val response = rootResponseAdapter.fromJson(responseJson) ?: throw RuntimeException(responseJson)
 
         val dataJson = stringAdapter.toJson(response.data)
         return respAdapter.fromJson(dataJson) ?: throw HttpException(dataJson)
