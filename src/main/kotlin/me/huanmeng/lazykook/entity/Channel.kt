@@ -1,6 +1,6 @@
 package me.huanmeng.lazykook.entity
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * 2024/4/16<br>
@@ -10,32 +10,22 @@ import com.squareup.moshi.Json
 data class Channel(
     val id: String,
     val name: String,
-    @Json(name = "user_id")
-    val userId: Int,
-    @Json(name = "guild_id")
-    val guildId: String,
+    @JsonProperty("user_id") val userId: Int,
+    @JsonProperty("guild_id") val guildId: String,
     val topic: String,
-    @Json(name = "is_category")
-    val isCategory: Boolean,
-    @Json(name = "parent_id")
-    val parentId: String,
+    @JsonProperty("is_category") val isCategory: Boolean,
+    @JsonProperty("parent_id") val parentId: String,
     val level: Int,
-    @Json(name = "slow_mode")
-    val slowMode: Int,
+    @JsonProperty("slow_mode") val slowMode: Int,
     val type: Int,
-    @Json(name = "permission_overwrites")
-    val permissionOverwrites: List<PermissionOverwrite>,
-    @Json(name = "permission_users")
-    val permissionUsers: List<PermissionUser>,
-    @Json(name = "permission_sync")
-    val permissionSync: Int,
-    @Json(name = "has_password")
-    val hasPassword: Boolean,
+    @JsonProperty("permission_overwrites") val permissionOverwrites: List<PermissionOverwrite>,
+    @JsonProperty("permission_users") val permissionUsers: List<PermissionUser>,
+    @JsonProperty("permission_sync") val permissionSync: Int,
+    @JsonProperty("has_password") val hasPassword: Boolean,
 )
 
 data class PermissionOverwrite(
-    @Json(name = "role_id")
-    val roleId: Int,
+    @JsonProperty("role_id") val roleId: Int,
     val allow: Int,
     val deny: Int,
 )

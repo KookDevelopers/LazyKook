@@ -1,6 +1,6 @@
 package me.huanmeng.lazykook.entity
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * 2024/4/16<br>
@@ -11,7 +11,6 @@ data class Quote(
     val id: String,
     val type: Int,
     val content: String,
-    @Json(name = "create_at")
-    val createAt: Long,
+    @JsonProperty("create_at") val createAt: Long,
     val author: User,
 )

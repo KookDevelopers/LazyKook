@@ -1,7 +1,7 @@
 package me.huanmeng.lazykook.http
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
@@ -29,10 +29,7 @@ class KHttp(private val kook: LazyKook) {
             requestTimeoutMillis = config.timeout
         }
     }
-    val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-
-    private val rootResponseAdapter = moshi.adapter(RootResponse::class.java)
-    private val stringAdapter = moshi.adapter(Any::class.java)
+    val mapper = jacksonObjectMapper()
 
     private suspend fun get(path: String, vararg params: Pair<String, Any>): String {
         return client.get(config.url + path) {
@@ -57,19 +54,17 @@ class KHttp(private val kook: LazyKook) {
     }
 
     suspend fun <REQ : Any, RESP : Any> http(apiRouter: APIRouter<Class<REQ>, Class<RESP>>, request: REQ): RESP {
-        val reqAdapter = moshi.adapter(apiRouter.requestClass)
-        val respAdapter = moshi.adapter(apiRouter.responseClass)
-        val params = reqAdapter.toJsonValue(request)
+        val map =
+            mapper.readValue(mapper.writeValueAsString(request), object : TypeReference<Map<String, Any>>() {})
 
-        @Suppress("UNCHECKED_CAST") val map = params as MutableMap<String, Any>
         val responseJson = when (apiRouter.apiMethod) {
             GET -> this::get
             POST -> this::post
         }(apiRouter.buildPath(), map.toPairs())
-        val response = rootResponseAdapter.fromJson(responseJson) ?: throw RuntimeException(responseJson)
+        val response = mapper.readValue(responseJson, RootResponse::class.java) ?: throw RuntimeException(responseJson)
 
-        val dataJson = stringAdapter.toJson(response.data)
-        return respAdapter.fromJson(dataJson) ?: throw HttpException(dataJson)
+        val dataJson = mapper.writeValueAsString(response.data)
+        return mapper.readValue(dataJson, apiRouter.responseClass) ?: throw HttpException(dataJson)
     }
 
     private fun HttpRequestBuilder.token(): HttpRequestBuilder {
