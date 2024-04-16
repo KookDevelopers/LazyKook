@@ -14,6 +14,7 @@ data class BotConfig(
 
 data class HttpConfig(
     val url: String = "https://www.kookapp.cn/api",
+    val timeout: Long = 3000,
 )
 
 enum class SocketMode(vararg alias: String) {
