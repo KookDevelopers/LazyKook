@@ -2,15 +2,19 @@ package me.huanmeng.lazykook.http
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import me.huanmeng.lazykook.LazyKook
+import me.huanmeng.lazykook.config.HttpConfig
 import me.huanmeng.lazykook.exception.HttpException
 import me.huanmeng.lazykook.http.HttpMethod.GET
 import me.huanmeng.lazykook.http.HttpMethod.POST
 import me.huanmeng.lazykook.http.response.RootResponse
 import me.huanmeng.lazykook.toPairs
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
 
 /**
  * 2024/4/15<br>
@@ -18,43 +22,41 @@ import okhttp3.Request
  * @author huanmeng_qwq
  */
 class KHttp(private val kook: LazyKook) {
-    private val client = OkHttpClient.Builder().build()
+    private val config: HttpConfig
+        get() = kook.config.httpConfig
+    private val client = HttpClient(CIO) {
+        install(io.ktor.client.plugins.HttpTimeout) {
+            requestTimeoutMillis = config.timeout
+        }
+    }
     val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 
     private val rootResponseAdapter = moshi.adapter(RootResponse::class.java)
     private val stringAdapter = moshi.adapter(Any::class.java)
 
-    private fun get(path: String, vararg params: Pair<String, Any>): String {
-        return client.newCall(
-            Request.Builder().get().url(kook.config.httpConfig.url + path.let {
-                if (params.isEmpty()) {
-                    it
-                } else {
-                    it + "?" + params.joinToString("&") { (k, v) -> "$k=$v" }
-                }
-            }).token().build()
-        ).execute().body.let {
-            if (it == null) {
-                throw RuntimeException("Unsupported")
-            }
-            it
-        }.string()
-    }
-
-    private fun post(path: String, vararg params: Pair<String, Any>): String {
-        return client.newCall(Request.Builder().post(FormBody.Builder().apply {
+    private suspend fun get(path: String, vararg params: Pair<String, Any>): String {
+        return client.get(config.url + path) {
             params.forEach {
-                add(it.first, it.second.toString())
+                parameter(it.first, it.second.toString())
             }
-        }.build()).url(kook.config.httpConfig.url + path).token().build()).execute().body.let {
-            if (it == null) {
-                throw RuntimeException("Unsupported")
-            }
-            it
-        }.string()
+            token()
+        }.bodyAsText()
     }
 
-    fun <REQ : Any, RESP : Any> http(apiRouter: APIRouter<Class<REQ>, Class<RESP>>, request: REQ): RESP {
+    private suspend fun post(path: String, vararg params: Pair<String, Any>): String {
+        return client.submitForm(config.url + path) {
+            token()
+            setBody(
+                FormDataContent(
+                    Parameters.build {
+                        params.forEach { append(it.first, it.second.toString()) }
+                    }
+                )
+            )
+        }.bodyAsText()
+    }
+
+    suspend fun <REQ : Any, RESP : Any> http(apiRouter: APIRouter<Class<REQ>, Class<RESP>>, request: REQ): RESP {
         val reqAdapter = moshi.adapter(apiRouter.requestClass)
         val respAdapter = moshi.adapter(apiRouter.responseClass)
         val params = reqAdapter.toJsonValue(request)
@@ -70,7 +72,9 @@ class KHttp(private val kook: LazyKook) {
         return respAdapter.fromJson(dataJson) ?: throw HttpException(dataJson)
     }
 
-    private fun Request.Builder.token(): Request.Builder {
-        return this.header("Authorization", "Bot ${kook.config.token}")
+    private fun HttpRequestBuilder.token(): HttpRequestBuilder {
+        header(HttpHeaders.UserAgent, "huanmeng-qwq/LazyKook")
+        header(HttpHeaders.Authorization, "Bot ${kook.config.token}")
+        return this
     }
 }
