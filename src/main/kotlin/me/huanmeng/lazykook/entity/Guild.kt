@@ -1,6 +1,6 @@
 package me.huanmeng.lazykook.entity
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * 2024/4/16<br>
@@ -11,19 +11,19 @@ data class Guild(
     val id: String,
     val name: String,
     val topic: String,
-    @Json(name = "user_id")
+    @JsonProperty("user_id")
     val userId: String,
     val icon: String,
-    @Json(name = "notify_type")
+    @JsonProperty("notify_type")
     val notifyType: Int,
     val region: String,
-    @Json(name = "enable_open")
+    @JsonProperty("enable_open")
     val enableOpen: Boolean,
-    @Json(name = "open_id")
+    @JsonProperty("open_id")
     val openId: String,
-    @Json(name = "default_channel_id")
+    @JsonProperty("default_channel_id")
     val defaultChannelId: String,
-    @Json(name = "welcome_channel_id")
+    @JsonProperty("welcome_channel_id")
     val welcomeChannelId: String,
     val roles: List<Role>,
     val channels: List<Channel>,

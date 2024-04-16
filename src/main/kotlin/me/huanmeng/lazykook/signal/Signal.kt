@@ -1,6 +1,6 @@
 package me.huanmeng.lazykook.signal
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * 2024/4/16<br>
@@ -8,10 +8,10 @@ import com.squareup.moshi.Json
  * @author huanmeng_qwq
  */
 data class Signal(
-    @Json(name = "s")
+    @JsonProperty("s")
     val type: Int,
-    @Json(name = "d")
+    @JsonProperty("d")
     val data: Map<String, Any>? = null,
-    @Json(name = "sn")
+    @JsonProperty("sn")
     val signal: Int = -99,
 )
