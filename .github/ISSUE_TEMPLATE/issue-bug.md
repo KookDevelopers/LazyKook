@@ -1,6 +1,6 @@
 ---
-name: ""
-about: Please describe in detail the features you expect.
+name: Bug Report
+about: Please provide a detailed description of the problem you have encountered
 title: "bug: xxx"
 labels: [ "bug" ]
 ---
