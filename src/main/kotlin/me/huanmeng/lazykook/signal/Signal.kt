@@ -12,6 +12,7 @@ data class Signal(
     val type: Int,
     @JsonProperty("d")
     val data: Map<String, Any>? = null,
+    val extra: Map<String, Any>? = null,
     @JsonProperty("sn")
     val signal: Int = -99,
 )

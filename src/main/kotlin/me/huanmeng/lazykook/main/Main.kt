@@ -5,6 +5,7 @@ import me.huanmeng.lazykook.LazyKook
 import me.huanmeng.lazykook.config.BotConfig
 import me.huanmeng.lazykook.http.Requests
 import me.huanmeng.lazykook.http.request.GatewayRequest
+import me.huanmeng.lazykook.ws.WebSocketClient
 import snw.jkook.config.file.YamlConfiguration
 import java.io.File
 
@@ -23,6 +24,7 @@ object Main {
         runBlocking {
             val resp = bot.http.http(Requests.GATEWAY, GatewayRequest())
             println(resp)
+            WebSocketClient(resp.url).start()
         }
     }
 }
