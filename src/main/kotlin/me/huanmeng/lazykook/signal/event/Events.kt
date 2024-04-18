@@ -13,7 +13,7 @@ sealed class StringMessageExtraData(
     @JsonProperty("mention_roles") open val mentionRoles: Array<Any>,
     @JsonProperty("mention_here") open val mentionHere: Boolean,
     open val author: User,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class TextMessageExtraData(
     override val type: SignalEventType,
@@ -68,7 +68,7 @@ sealed class ResourceMessageExtraData(
     open val guildId: String,
     open val attachments: Attachments,
     open val author: User
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class ImageMessageExtraData(
     override val type: SignalEventType,
@@ -211,7 +211,7 @@ data class ItemMessageExtraData(
     val mention: Array<Any>,
     val author: User,
     val kmarkdown: Map<String, Any>
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 // system
 data class Reaction(
@@ -228,13 +228,13 @@ data class AddedReactionExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val reaction: Reaction,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class DeletedReactionExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val reaction: Reaction,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class UpdateMessage(
     @JsonProperty("channel_id")
@@ -287,7 +287,7 @@ data class UpdatedMessageExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val message: UpdateMessage,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class DeleteMessage(
     @JsonProperty("channel_id")
@@ -314,19 +314,19 @@ data class DeletedMessageExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val message: DeleteMessage,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class AddedChannelExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val channel: Channel,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class UpdatedChannelExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val channel: Channel,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class DeleteChannel(
     @JsonProperty("channel_id")
@@ -339,7 +339,7 @@ data class DeletedChannelExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val channel: DeleteChannel,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class PinnedMessage(
     @JsonProperty("channel_id")
@@ -354,13 +354,13 @@ data class PinnedMessageExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val message: PinnedMessage,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class UnpinnedMessageExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val message: PinnedMessage,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 // private
 data class UpdatePrivateMessage(
@@ -381,7 +381,7 @@ data class UpdatedPrivateMessageExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val message: UpdatePrivateMessage,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class DeletePrivateMessage(
     @JsonProperty("msg_id")
@@ -400,7 +400,7 @@ data class DeletedPrivateMessageExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val message: DeletePrivateMessage,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class PrivateReaction(
     val emoji: Emoji,
@@ -416,13 +416,13 @@ data class PrivateAddedReactionExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val reaction: PrivateReaction,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class PrivateDeletedReactionExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val reaction: PrivateReaction,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 // guild user
 data class JoinGuild(
@@ -436,7 +436,7 @@ data class JoinedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val guild: JoinGuild,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class ExitGuild(
     @JsonProperty("user_id")
@@ -449,7 +449,7 @@ data class ExitedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val guild: ExitGuild,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class UpdateGuildMember(
     @JsonProperty("user_id")
@@ -461,7 +461,7 @@ data class UpdatedGuildMemberExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val member: UpdateGuildMember,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class GuildMemberOnline(
     @JsonProperty("user_id")
@@ -475,7 +475,7 @@ data class GuildMemberOnlineExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val member: GuildMemberOnline,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class GuildMemberOffline(
     @JsonProperty("user_id")
@@ -489,39 +489,39 @@ data class GuildMemberOfflineExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val member: GuildMemberOffline,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 // role
 data class AddedRoleExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val role: Role,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class DeletedRoleExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val role: Role,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class UpdatedRoleExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val role: Role,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 // guild
 data class UpdatedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val guild: GuidInfo,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class DeletedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val guild: GuidInfo,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class AddBlockList(
     @JsonProperty("user_id")
@@ -535,7 +535,7 @@ data class AddedBlockListExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val blockList: AddBlockList,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class DeleteBlockList(
     @JsonProperty("user_id")
@@ -548,25 +548,25 @@ data class DeletedBlockListExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val blockList: DeleteBlockList,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class AddedEmojiExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val emoji: Emoji,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class RemovedEmojiExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val emoji: Emoji,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class UpdatedEmojiExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val emoji: Emoji,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 // user
 data class JoinedChannel(
@@ -582,7 +582,7 @@ data class JoinedChannelExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val channel: JoinedChannel,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class ExitedChannel(
     @JsonProperty("user_id")
@@ -597,13 +597,13 @@ data class ExitedChannelExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val channel: ExitedChannel,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class UserUpdatedExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val user: UserInfo,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class SelfJoinGuild(
     @JsonProperty("guild_id")
@@ -614,7 +614,7 @@ data class SelfJoinedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val guild: SelfJoinGuild,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class SelfExitedGuild(
     @JsonProperty("guild_id")
@@ -625,7 +625,7 @@ data class SelfExitedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val guild: SelfExitedGuild,
-) : SignalEventExtraData()
+) : SignalExtraData()
 
 data class MessageBtnClick(
     @JsonProperty("msg_id")
@@ -643,4 +643,4 @@ data class MessageBtnClickExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
     val message: MessageBtnClick,
-) : SignalEventExtraData()
+) : SignalExtraData()
