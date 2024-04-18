@@ -13,7 +13,7 @@ import me.huanmeng.lazykook.signal.SignalEventDeserializer
  * @author huanmeng_qwq
  */
 @JsonDeserialize(using = SignalEventDeserializer::class)
-data class SignalEvent(
+data class SignalData(
     @JsonProperty("channel_type")
     val channelType: ChannelType,
     val type: SignalEventType,
@@ -23,7 +23,7 @@ data class SignalEvent(
     @JsonProperty("msg_id") val msgId: String,
     @JsonProperty("msg_timestamp") val msgTimestamp: Long,
     val nonce: String,
-    val extra: SignalEventExtraData,
+    val extra: SignalExtraData,
 ) {
     val text by lazy {
         if (content is String) {
@@ -37,9 +37,9 @@ data class SignalEvent(
     }
 }
 
-sealed class SignalEventExtraData
+sealed class SignalExtraData
 
-enum class SignalEventType(@JsonValue val value: Int, val clazz: Class<out SignalEventExtraData>? = null) {
+enum class SignalEventType(@JsonValue val value: Int, val clazz: Class<out SignalExtraData>? = null) {
     TEXT(1, TextMessageExtraData::class.java),
     IMAGE(2, ImageMessageExtraData::class.java),
     VIDEO(3, VideoMessageExtraData::class.java),
@@ -60,7 +60,7 @@ data class ItemEventContent(
     val itemId: Int,
 )
 
-enum class SignalSystemEventType(@JsonValue val value: String, val clazz: Class<out SignalEventExtraData>) {
+enum class SignalSystemEventType(@JsonValue val value: String, val clazz: Class<out SignalExtraData>) {
     // channel
     ADDED_REACTION("added_reaction", AddedReactionExtraData::class.java),
     DELETED_REACTION("deleted_reaction", DeletedReactionExtraData::class.java),

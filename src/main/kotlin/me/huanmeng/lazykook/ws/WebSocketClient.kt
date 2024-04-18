@@ -4,9 +4,13 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import me.huanmeng.lazykook.LazyKook
+import me.huanmeng.lazykook.event.type.*
 import me.huanmeng.lazykook.mapper
 import me.huanmeng.lazykook.signal.Signal
+import me.huanmeng.lazykook.signal.event.SignalData
 import me.huanmeng.lazykook.uncompress
 import kotlin.math.min
 
@@ -15,7 +19,7 @@ import kotlin.math.min
  * LazyKook<br>
  * @author huanmeng_qwq
  */
-class WebSocketClient(private val url: String) {
+class WebSocketClient(private val url: String, val root: LazyKook) {
     private var nextPingDelay = 1000 * 26
     private var lastPingTime = System.currentTimeMillis()
     private var lastPongTime = System.currentTimeMillis()
@@ -30,15 +34,18 @@ class WebSocketClient(private val url: String) {
     suspend fun start() {
         client.webSocket(url) {
             launch {
-                while (true) {
+                while (root.isRunning) {
                     if (System.currentTimeMillis() > lastPingTime + min(nextPingDelay, 1000 * 35)) {
+                        root.eventManager.postEvent(SignalPingEvent)
                         send("{\"s\":2,\"sn\":$_sn}")
                         nextPingDelay = 1000 * 26
                         lastPingTime = System.currentTimeMillis()
                     }
                 }
+                this@launch.cancel()
+                this@webSocket.cancel()
             }
-            while (true) {
+            while (root.isRunning) {
                 val frame = incoming.receive()
                 when (frame.frameType) {
                     io.ktor.websocket.FrameType.TEXT -> {
@@ -66,15 +73,22 @@ class WebSocketClient(private val url: String) {
             _sn = signal.signal
             nextPingDelay += 500
         }
+        root.eventManager.postEvent(ReceiverSignalEvent(signal))
         when (signal.type) {
             1 -> {
+                root.eventManager.postEvent(SignalHelloEvent(signal))
             }
 
             0 -> {
+                if (signal.data is SignalData) {
+                    root.eventManager.postEvent(SignalExtraEvent(signal, signal.data))
+                    root.eventManager.postEvent(SignalExtraDataEvent(signal, signal.data, signal.data.extra))
+                }
             }
 
             3 -> {
                 lastPongTime = System.currentTimeMillis()
+                root.eventManager.postEvent(SignalPongEvent(signal))
             }
         }
     }
