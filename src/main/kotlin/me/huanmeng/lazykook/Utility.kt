@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
@@ -8,7 +9,9 @@ fun <K, V> Map<K, V>.toPairs(): Array<Pair<K, V>> {
     return this.entries.map { it.toPair() }.toTypedArray()
 }
 
-val mapper = jacksonObjectMapper()
+val mapper = jacksonObjectMapper().apply {
+    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+}
 
 fun ByteArray.uncompress(): ByteArray {
     Inflater().let { inf ->
