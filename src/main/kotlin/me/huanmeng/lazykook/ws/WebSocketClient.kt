@@ -16,20 +16,25 @@ import kotlin.math.min
  * @author huanmeng_qwq
  */
 class WebSocketClient(private val url: String) {
-    var nextPingDelay = 1000 * 26
-    var lastPingTime = System.currentTimeMillis()
-    var sn: Int = 0
-    val client = HttpClient(CIO) {
+    private var nextPingDelay = 1000 * 26
+    private var lastPingTime = System.currentTimeMillis()
+    private var lastPongTime = System.currentTimeMillis()
+    private var _sn: Int = 0
+    private val client = HttpClient(CIO) {
         install(WebSockets)
     }
+
+    val sn: Int
+        get() = _sn
 
     suspend fun start() {
         client.webSocket(url) {
             launch {
                 while (true) {
                     if (System.currentTimeMillis() > lastPingTime + min(nextPingDelay, 1000 * 35)) {
-                        send("{\"s\":2,\"sn\":$sn}")
+                        send("{\"s\":2,\"sn\":$_sn}")
                         nextPingDelay = 1000 * 26
+                        lastPingTime = System.currentTimeMillis()
                     }
                 }
             }
@@ -39,24 +44,14 @@ class WebSocketClient(private val url: String) {
                     io.ktor.websocket.FrameType.TEXT -> {
                         frame as Frame.Text
                         val message = frame.readText()
-                        val signal = mapper.readValue(message, Signal::class.java)
-                        if (signal.signal != -99) {
-                            sn = signal.signal
-                            nextPingDelay += 500
-                        }
-                        processSignal(message, signal)
+                        process(message)
                     }
 
                     io.ktor.websocket.FrameType.BINARY -> {
                         frame as Frame.Binary
                         val bytes = frame.readBytes().uncompress()
                         val message = String(bytes)
-                        val signal = mapper.readValue(message, Signal::class.java)
-                        if (signal.signal != -99) {
-                            sn = signal.signal
-                            nextPingDelay += 500
-                        }
-                        processSignal(message, signal)
+                        process(message)
                     }
 
                     else -> {}
@@ -65,6 +60,22 @@ class WebSocketClient(private val url: String) {
         }
     }
 
-    private fun processSignal(json: String, signal: Signal) {
+    private fun process(message: String) {
+        val signal = mapper.readValue(message, Signal::class.java)
+        if (signal.signal != -99) {
+            _sn = signal.signal
+            nextPingDelay += 500
+        }
+        when (signal.type) {
+            1 -> {
+            }
+
+            0 -> {
+            }
+
+            3 -> {
+                lastPongTime = System.currentTimeMillis()
+            }
+        }
     }
 }
