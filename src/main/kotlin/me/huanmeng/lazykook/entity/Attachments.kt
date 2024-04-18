@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.entity
 
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -17,5 +18,11 @@ data class Attachments(
     val size: Int?,
     val duration: Int?,
     val width: Int?,
-    val height: Int?
-)
+    val height: Int?,
+    val unknownField: MutableMap<String, Any> = hashMapOf()
+) {
+    @JsonAnySetter
+    fun setUnknownField(key: String, value: Any) {
+        unknownField[key] = value
+    }
+}

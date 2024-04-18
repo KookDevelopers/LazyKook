@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.entity
 
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -22,5 +23,10 @@ data class User(
     @JsonProperty("mobile_verified")
     val mobileVerified: Boolean,
     val roles: List<Int>,
+    val unknownField: MutableMap<String, Any> = hashMapOf()
 ) {
+    @JsonAnySetter
+    fun setUnknownField(key: String, value: Any) {
+        unknownField[key] = value
+    }
 }

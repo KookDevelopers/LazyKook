@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.entity
 
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -27,5 +28,10 @@ data class Guild(
     val welcomeChannelId: String,
     val roles: List<Role>,
     val channels: List<Channel>,
+    val unknownField: MutableMap<String, Any> = hashMapOf()
 ) {
+    @JsonAnySetter
+    fun setUnknownField(key: String, value: Any) {
+        unknownField[key] = value
+    }
 }
