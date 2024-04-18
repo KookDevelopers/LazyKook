@@ -23,6 +23,8 @@ dependencies {
     implementation("io.ktor:ktor-client-core-jvm")
     implementation("io.ktor:ktor-client-cio-jvm")
     implementation("io.ktor:ktor-client-websockets")
+
+    implementation("com.huanmeng-qwq:event-core:1.0.4")
 }
 
 tasks.test {
