@@ -514,13 +514,13 @@ data class UpdatedRoleExtraData(
 data class UpdatedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
-    val guild: GuidInfo,
+    val guild: GuildInfo,
 ) : SignalExtraData()
 
 data class DeletedGuildExtraData(
     val type: SignalSystemEventType,
     @JsonProperty("body")
-    val guild: GuidInfo,
+    val guild: GuildInfo,
 ) : SignalExtraData()
 
 data class AddBlockList(

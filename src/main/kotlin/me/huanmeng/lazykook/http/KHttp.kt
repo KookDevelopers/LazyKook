@@ -1,7 +1,6 @@
 package me.huanmeng.lazykook.http
 
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
@@ -14,6 +13,7 @@ import me.huanmeng.lazykook.exception.HttpException
 import me.huanmeng.lazykook.http.HttpMethod.GET
 import me.huanmeng.lazykook.http.HttpMethod.POST
 import me.huanmeng.lazykook.http.response.RootResponse
+import me.huanmeng.lazykook.mapper
 import me.huanmeng.lazykook.toPairs
 
 /**
@@ -29,33 +29,40 @@ class KHttp(private val kook: LazyKook) {
             requestTimeoutMillis = config.timeout
         }
     }
-    val mapper = jacksonObjectMapper()
 
-    private suspend fun get(path: String, vararg params: Pair<String, Any>): String {
+    private suspend fun get(path: String, vararg params: Pair<String, Any?>): String {
         return client.get(config.url + path) {
             params.forEach {
+                if (it.second == null) return@forEach
                 parameter(it.first, it.second.toString())
             }
             token()
         }.bodyAsText()
     }
 
-    private suspend fun post(path: String, vararg params: Pair<String, Any>): String {
+    private suspend fun post(path: String, vararg params: Pair<String, Any?>): String {
         return client.submitForm(config.url + path) {
             token()
             setBody(
                 FormDataContent(
                     Parameters.build {
-                        params.forEach { append(it.first, it.second.toString()) }
+                        params.forEach {
+                            if (it.second == null) return@forEach
+                            append(it.first, it.second.toString())
+                        }
                     }
                 )
             )
         }.bodyAsText()
     }
 
-    suspend fun <REQ : Any, RESP : Any> http(apiRouter: APIRouter<Class<REQ>, Class<RESP>>, request: REQ): RESP {
+    suspend fun <REQ : Any, RESP : Any> http(
+        apiRouter: APIRouter<Class<REQ>, Class<RESP>>,
+        request: REQ,
+        respCallback: ((String) -> Unit) = {}
+    ): RESP {
         val map =
-            mapper.readValue(mapper.writeValueAsString(request), object : TypeReference<Map<String, Any>>() {})
+            mapper.readValue(mapper.writeValueAsString(request), object : TypeReference<Map<String, Any?>>() {})
 
         val responseJson = when (apiRouter.apiMethod) {
             GET -> this::get
@@ -64,6 +71,7 @@ class KHttp(private val kook: LazyKook) {
         val response = mapper.readValue(responseJson, RootResponse::class.java) ?: throw RuntimeException(responseJson)
 
         val dataJson = mapper.writeValueAsString(response.data)
+        respCallback(dataJson)
         return mapper.readValue(dataJson, apiRouter.responseClass) ?: throw HttpException(dataJson)
     }
 

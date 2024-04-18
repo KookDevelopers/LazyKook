@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.entity
 
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
@@ -13,4 +14,10 @@ data class Quote(
     val content: String,
     @JsonProperty("create_at") val createAt: Long,
     val author: User,
-)
+    val unknownField: MutableMap<String, Any> = hashMapOf()
+) {
+    @JsonAnySetter
+    fun setUnknownField(key: String, value: Any) {
+        unknownField[key] = value
+    }
+}
