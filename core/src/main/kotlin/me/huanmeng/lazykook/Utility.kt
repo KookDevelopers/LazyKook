@@ -1,8 +1,10 @@
 package me.huanmeng.lazykook
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import me.huanmeng.lazykook.annotation.ByName
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
+import kotlin.reflect.KProperty
 
 fun <K, V> Map<K, V>.toPairs(): Array<Pair<K, V>> {
     return this.entries.map { it.toPair() }.toTypedArray()
@@ -24,4 +26,12 @@ fun ByteArray.uncompress(): ByteArray {
             return it.toByteArray()
         }
     }
+}
+
+fun <V, V1 : V> locateValue(map: Map<String, Any?>, property: KProperty<*>): V1 {
+    val name =
+        property.annotations.filter { it.annotationClass == ByName::class }.map { it as ByName }.firstOrNull()?.value
+            ?: property.name
+    @Suppress("UNCHECKED_CAST")
+    return (map[name] as V1)
 }
