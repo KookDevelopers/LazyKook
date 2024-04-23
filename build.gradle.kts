@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    implementation("com.github.SNWCreations:JKook:0.50.0")
+    implementation("com.github.SNWCreations:JKook:0.51.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.+")
     implementation("ch.qos.logback:logback-classic:1.5.6")
 
