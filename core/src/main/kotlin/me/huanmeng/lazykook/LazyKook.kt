@@ -5,6 +5,7 @@ import me.huanmeng.lazykook.event.EventManager
 import me.huanmeng.lazykook.http.KHttp
 import me.huanmeng.lazykook.http.Requests
 import me.huanmeng.lazykook.http.request.GatewayRequest
+import me.huanmeng.lazykook.service.StorageService
 import me.huanmeng.lazykook.ws.WebSocketClient
 
 /**
@@ -13,8 +14,9 @@ import me.huanmeng.lazykook.ws.WebSocketClient
  * @author huanmeng_qwq
  */
 open class LazyKook(val config: BotConfig) {
-    val http: KHttp = KHttp(this)
+    val http = KHttp(this)
     val eventManager = EventManager()
+    val storageService = StorageService(this)
 
     @Suppress("MemberVisibilityCanBePrivate")
     protected var _isRunning: Boolean = false

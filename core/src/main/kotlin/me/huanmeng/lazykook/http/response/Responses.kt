@@ -3,6 +3,8 @@ package me.huanmeng.lazykook.http.response
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.entity.*
+import me.huanmeng.lazykook.locateValue
+import kotlin.reflect.KProperty
 
 
 data class RootResponse(
@@ -53,12 +55,14 @@ data class GuildViewResponse(
     val status: Int,
     @JsonProperty("auto_delete_time") val autoDeleteTime: String,
     @JsonProperty("user_config") val userConfig: Map<String, Any>?,
-    val unknownField: MutableMap<String, Any> = hashMapOf()
+    val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
     @JsonAnySetter
-    fun setUnknownField(key: String, value: Any) {
+    fun setUnknownField(key: String, value: Any?) {
         unknownField[key] = value
     }
+
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
 data class MuteData(
@@ -67,12 +71,14 @@ data class MuteData(
 )
 
 data class GuildMuteListResponse(
-    val mic: MuteData, val headset: MuteData, val unknownField: MutableMap<String, Any> = hashMapOf()
+    val mic: MuteData, val headset: MuteData, val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
     @JsonAnySetter
-    fun setUnknownField(key: String, value: Any) {
+    fun setUnknownField(key: String, value: Any?) {
         unknownField[key] = value
     }
+
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
 data class GuildBoostHistory(
@@ -81,12 +87,14 @@ data class GuildBoostHistory(
     @JsonProperty("start_time") val startTime: Int,
     @JsonProperty("end_time") val endTime: Int,
     val user: User,
-    val unknownField: MutableMap<String, Any> = hashMapOf()
+    val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
     @JsonAnySetter
-    fun setUnknownField(key: String, value: Any) {
+    fun setUnknownField(key: String, value: Any?) {
         unknownField[key] = value
     }
+
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
 data class GuildBoostHistoryResponse(
@@ -102,10 +110,12 @@ data class GuildUserListResponse(
     @JsonProperty("user_count") val userCount: Int,
     @JsonProperty("online_count") val onlineCount: Int,
     @JsonProperty("offline_count") val offlineCount: Int,
-    val unknownField: MutableMap<String, Any> = hashMapOf()
+    val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : PageResponse<User>(items, meta, sort) {
     @JsonAnySetter
-    fun setUnknownField(key: String, value: Any) {
+    fun setUnknownField(key: String, value: Any?) {
         unknownField[key] = value
     }
+
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }

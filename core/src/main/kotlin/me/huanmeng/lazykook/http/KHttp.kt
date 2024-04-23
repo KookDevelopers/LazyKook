@@ -72,7 +72,11 @@ class KHttp(private val kook: LazyKook) {
 
         val dataJson = mapper.writeValueAsString(response.data)
         respCallback(dataJson)
-        return mapper.readValue(dataJson, apiRouter.responseClass) ?: throw HttpException(dataJson)
+        return try {
+            mapper.readValue(dataJson, apiRouter.responseClass)
+        } catch (e: Exception) {
+            throw HttpException(responseJson, e)
+        }
     }
 
     private fun HttpRequestBuilder.token(): HttpRequestBuilder {
