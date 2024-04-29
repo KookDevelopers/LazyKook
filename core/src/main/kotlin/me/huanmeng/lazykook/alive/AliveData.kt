@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.alive
 
+import me.huanmeng.lazykook.annotation.NotRecommended
 import me.huanmeng.lazykook.locateValue
 import kotlin.properties.ObservableProperty
 import kotlin.reflect.KProperty
@@ -10,8 +11,11 @@ import kotlin.reflect.KProperty
  * @author huanmeng_qwq
  */
 abstract class AliveData<T>(private val key: String, id: String) {
+    internal val aliasKey: MutableSet<String> by lazy { hashSetOf() }
     private val map: MutableMap<String, Any> = hashMapOf()
-    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(map, property)
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(map, property) { p ->
+        if (aliasKey.contains(p.name)) return@locateValue key else null
+    }
 
     fun <V, V1 : V> visit(name: String): V1 {
         @Suppress("UNCHECKED_CAST")
@@ -31,13 +35,15 @@ abstract class AliveData<T>(private val key: String, id: String) {
         return map.keys
     }
 
-    fun update(key: String, value: Any?): Boolean {
+    fun update(_key: String, value: Any?): Boolean {
+        val k = if (aliasKey.contains(_key)) this.key else _key
         if (value == null) {
-            return map.remove(key) != null
+            return map.remove(k) != null
         }
-        return map.put(key, value) != null
+        return map.put(k, value) != null
     }
 
+    @NotRecommended
     fun update(full: Map<String, Any>) {
         map.putAll(full)
     }
@@ -72,6 +78,6 @@ abstract class AliveData<T>(private val key: String, id: String) {
 
 }
 
-fun <V> dynamic(value: V) = object : ObservableProperty<V>(value) {}
+inline fun <reified V> dynamic(value: V) = object : ObservableProperty<V>(value) {}
 
-fun <V> dynamicNull() = object : ObservableProperty<V?>(null) {}
+inline fun <reified V> dynamicNull() = object : ObservableProperty<V?>(null) {}

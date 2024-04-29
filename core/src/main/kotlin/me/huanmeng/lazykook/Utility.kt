@@ -28,10 +28,10 @@ fun ByteArray.uncompress(): ByteArray {
     }
 }
 
-fun <V, V1 : V> locateValue(map: Map<String, Any?>, property: KProperty<*>): V1 {
-    val name =
-        property.annotations.filter { it.annotationClass == ByName::class }.map { it as ByName }.firstOrNull()?.value
-            ?: property.name
-    @Suppress("UNCHECKED_CAST")
-    return (map[name] as V1)
+fun <V, V1 : V> locateValue(
+    map: Map<String, Any?>, property: KProperty<*>, nameGetter: ((KProperty<*>) -> String?)? = null
+): V1 {
+    val name = nameGetter?.invoke(property) ?: property.annotations.filter { it.annotationClass == ByName::class }
+        .map { it as ByName }.firstOrNull()?.value ?: property.name
+    @Suppress("UNCHECKED_CAST") return (map[name] as V1)
 }

@@ -33,7 +33,7 @@ class StorageService(val lazyKook: LazyKook) {
     }
 
     suspend fun queryGuild(guildId: String): GuildData? {
-        return guildManager.getOrNull(guildId) ?: run {
+        return guildManager[guildId] ?: run {
             try {
                 val response = lazyKook.http.http(Requests.Guild.VIEW, GuildViewRequest(guildId))
                 guildManager.alive(GuildData(guildId).also { it.update(response) })

@@ -1,6 +1,7 @@
 package me.huanmeng.lazykook.alive
 
 import me.huanmeng.lazykook.alive.type.GuildData
+import me.huanmeng.lazykook.annotation.NotRecommended
 import java.util.*
 
 class GuildManager : EntityAliveManager<GuildData, GuildData>("guild")
@@ -39,7 +40,30 @@ abstract class EntityAliveManager<V, T : AliveData<V>>(private val name: String)
         aliveMap[getUUID(aliveData.id)]?.update(key, value)
     }
 
-    fun update(aliveData: T, full: Map<String, Any>) {
-        aliveMap[getUUID(aliveData.id)]?.update(full)
+    operator fun plusAssign(aliveData: T) {
+        alive(aliveData)
+    }
+
+    operator fun get(id: String): T? {
+        return getOrNull(id)
+    }
+
+    operator fun set(id: String, value: V) {
+        getOrNull(id)?.also {
+            update(it, value)
+        }
+    }
+
+    operator fun set(id: String, key: String, value: Any?) {
+        getOrNull(id)?.also {
+            update(it, key, value)
+        }
+    }
+
+    @NotRecommended
+    operator fun set(id: String, full: Map<String, Any>) {
+        getOrNull(id)?.also {
+            it.update(full)
+        }
     }
 }
