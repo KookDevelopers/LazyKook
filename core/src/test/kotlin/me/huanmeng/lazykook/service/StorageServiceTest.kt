@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
  * @author huanmeng_qwq
  */
 class StorageServiceTest : BotTest() {
-    val service = bot.storageService
+    private val service = bot.storageService
 
     @Test
     fun `test findGuild`() = runBlocking {
@@ -23,7 +23,7 @@ class StorageServiceTest : BotTest() {
     @Test
     fun `test findUser`() = runBlocking {
         val user = service.findUser(testUserId, testGuildId)
-        assertEquals(testUserId, user.id)
+        assertEquals(testUserId, user.userId)
         assertContains(user.getNicknames(), testGuildId)
     }
 

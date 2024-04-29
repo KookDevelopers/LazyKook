@@ -1,6 +1,7 @@
 package me.huanmeng.lazykook.alive.type
 
 import me.huanmeng.lazykook.alive.AliveData
+import me.huanmeng.lazykook.annotation.ByName
 import me.huanmeng.lazykook.entity.User
 import me.huanmeng.lazykook.entity.UserInfo
 
@@ -14,6 +15,8 @@ class UserData(id: String) : AliveData<UserData>("id", id) {
         aliasKey += "userId"
     }
 
+    @ByName("id")
+    val userId: String by this
     val username: String by this
     val nickname: String?
         get() = _nickname.firstNotNullOfOrNull { it.value }
