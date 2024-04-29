@@ -43,8 +43,8 @@ class StorageService(val lazyKook: LazyKook) {
             try {
                 val response = lazyKook.http.http(Requests.Guild.VIEW, GuildViewRequest(guildId))
                 guildManager.alive(GuildData(response.id).also { it.update(response) })
-            } catch (_: Exception) {
-                null
+            } catch (e: Exception) {
+                throw e
             }
         }
     }
@@ -59,8 +59,8 @@ class StorageService(val lazyKook: LazyKook) {
                         it.updateNickname(guildId, response.nickname)
                     }
                 })
-            } catch (_: Exception) {
-                null
+            } catch (e: Exception) {
+                throw e
             }
         }
     }

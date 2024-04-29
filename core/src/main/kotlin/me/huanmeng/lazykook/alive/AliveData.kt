@@ -11,7 +11,7 @@ import kotlin.reflect.KProperty
  * @author huanmeng_qwq
  */
 abstract class AliveData<T>(private val key: String, id: String) {
-    internal val aliasKey: MutableSet<String> by lazy { hashSetOf() }
+    protected val aliasKey: MutableSet<String> by lazy { hashSetOf() }
     private val map: MutableMap<String, Any> = hashMapOf()
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(map, property) { p ->
         if (aliasKey.contains(p.name)) return@locateValue key else null

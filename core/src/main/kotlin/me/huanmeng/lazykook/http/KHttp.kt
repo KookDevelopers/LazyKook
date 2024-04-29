@@ -75,7 +75,8 @@ class KHttp(private val kook: LazyKook) {
         return try {
             mapper.readValue(dataJson, apiRouter.responseClass)
         } catch (e: Exception) {
-            throw HttpException(responseJson, e)
+            // eg {"code":401,"message":"系统检测到您的登录环境异常，为保证您的账号安全，请重新登录","data":{"name":"Unauthorized","status":401}}
+            throw HttpException(responseJson)
         }
     }
 
