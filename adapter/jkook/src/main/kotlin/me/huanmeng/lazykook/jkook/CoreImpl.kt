@@ -19,7 +19,7 @@ import snw.jkook.scheduler.Scheduler
  * @author huanmeng_qwq
  */
 class CoreImpl(val lazyKook: LazyKook) : Core {
-    val logger = LoggerFactory.getLogger("LazyKook")
+    private val _logger = LoggerFactory.getLogger("LazyKook")
     override fun getHttpAPI(): HttpAPI {
         TODO("Not yet implemented")
     }
@@ -39,7 +39,7 @@ class CoreImpl(val lazyKook: LazyKook) : Core {
     }
 
     override fun getLogger(): Logger {
-        return logger
+        return _logger
     }
 
     override fun getConsoleCommandSender(): ConsoleCommandSender {
