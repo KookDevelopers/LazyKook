@@ -1,10 +1,14 @@
 package me.huanmeng.lazykook.alive
 
 import me.huanmeng.lazykook.alive.type.GuildData
+import me.huanmeng.lazykook.alive.type.RoleData
+import me.huanmeng.lazykook.alive.type.UserData
 import me.huanmeng.lazykook.annotation.NotRecommended
 import java.util.*
 
 class GuildManager : EntityAliveManager<GuildData, GuildData>("guild")
+class UserManager : EntityAliveManager<UserData, UserData>("user")
+class RoleManager : EntityAliveManager<RoleData, RoleData>("role")
 
 abstract class EntityAliveManager<V, T : AliveData<V>>(private val name: String) {
     private val aliveMap: MutableMap<UUID, T> = mutableMapOf()

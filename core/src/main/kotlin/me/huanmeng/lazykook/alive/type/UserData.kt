@@ -35,4 +35,12 @@ class UserData : AliveData<UserData>("id", "") {
     fun updateNickname(guildId: String, nickname: String) {
         this._nickname[guildId] = nickname
     }
+
+    fun getNickname(guildId: String): String? {
+        return _nickname[guildId]
+    }
+
+    fun getNicknames(): Map<String, String> {
+        return _nickname.toMap()
+    }
 }
