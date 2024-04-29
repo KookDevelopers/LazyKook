@@ -14,6 +14,12 @@ class UserData : AliveData<UserData>("id", "") {
         aliasKey += "userId"
     }
 
+    val username: String by this
+    val nickname: String?
+        get() = _nickname.firstNotNullOfOrNull { it.value }
+
+    private val _nickname: MutableMap<String, String> = hashMapOf()
+
     override fun update(data: UserData) {
         // unsupported
     }
@@ -24,5 +30,9 @@ class UserData : AliveData<UserData>("id", "") {
 
     fun update(userInfo: UserInfo) {
         copyFrom(userInfo)
+    }
+
+    fun updateNickname(guildId: String, nickname: String) {
+        this._nickname[guildId] = nickname
     }
 }

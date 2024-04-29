@@ -20,7 +20,7 @@ object Main {
         val tk = cfg.getString("token")!!
         val bot = LazyKook(BotConfig(tk))
         runBlocking {
-            val guild = bot.storageService.queryGuild("2530876875583713") ?: return@runBlocking
+            val guild = bot.storageService.findGuild("2530876875583713") ?: return@runBlocking
             println(guild.guildId)
             val roles: List<Role> by guild
             val name: String by guild

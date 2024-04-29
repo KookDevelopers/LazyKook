@@ -32,7 +32,7 @@ class StorageService(val lazyKook: LazyKook) {
         return guildData
     }
 
-    suspend fun queryGuild(guildId: String): GuildData? {
+    suspend fun findGuild(guildId: String): GuildData? {
         return guildManager[guildId] ?: run {
             try {
                 val response = lazyKook.http.http(Requests.Guild.VIEW, GuildViewRequest(guildId))
@@ -41,5 +41,9 @@ class StorageService(val lazyKook: LazyKook) {
                 null
             }
         }
+    }
+
+    suspend fun findUser(userId: String, guildId: String? = null) {
+
     }
 }

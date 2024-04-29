@@ -11,8 +11,10 @@ import me.huanmeng.lazykook.http.response.GuildViewResponse
  * @author huanmeng_qwq
  */
 class GuildData(id: String) : AliveData<GuildData>("guildId", id) {
+
     val guildId: String by this
     val name: String by this
+
     override fun update(data: GuildData) {
         // unsupported
     }

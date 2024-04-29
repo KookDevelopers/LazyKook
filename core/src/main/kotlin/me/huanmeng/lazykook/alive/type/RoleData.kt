@@ -9,7 +9,10 @@ import me.huanmeng.lazykook.entity.Role
  * @author huanmeng_qwq
  */
 class RoleData(id: String) : AliveData<RoleData>("roleId", id) {
+
     val roleId: String by this
+    val name: String by this
+
     override fun update(data: RoleData) {
         // unsupported
     }
