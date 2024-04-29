@@ -22,9 +22,9 @@ import me.huanmeng.lazykook.http.response.GuildViewResponse
  * @author huanmeng_qwq
  */
 class StorageService(val lazyKook: LazyKook) {
-    private val guildManager = GuildManager()
-    private val userManager = UserManager()
-    private val roleManagers: MutableMap<String, RoleManager> = mutableMapOf()
+    val guildManager = GuildManager()
+    val userManager = UserManager()
+    val roleManagers: MutableMap<String, RoleManager> = mutableMapOf()
 
     fun updateGuild(guildId: String, data: Any): GuildData {
         val guildData = guildManager.getOrAlive(guildId) {
