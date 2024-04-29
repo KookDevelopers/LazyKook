@@ -100,4 +100,13 @@ object Requests {
             apiMethod = HttpMethod.GET
         )
     }
+
+    object Role {
+        val LIST = APIRouter(
+            "/guild-role/list",
+            RoleListRequest::class.java,
+            RoleListResponse::class.java,
+            apiMethod = HttpMethod.GET
+        )
+    }
 }

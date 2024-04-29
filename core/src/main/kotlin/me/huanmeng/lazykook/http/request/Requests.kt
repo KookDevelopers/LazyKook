@@ -94,9 +94,19 @@ data class GuildBoostHistoryRequest(
     val endTime: Int,
 )
 
+// user
 data class UserViewRequest(
     @JsonProperty("user_id")
     val userId: String,
     @JsonProperty("guild_id")
     val guildId: String? = null,
+)
+
+// role
+data class RoleListRequest(
+    @JsonProperty("guild_id")
+    val guildId: String,
+    val page: Int = 1,
+    @JsonProperty("page_size")
+    val pageSize: Int = 20,
 )

@@ -119,3 +119,17 @@ data class GuildUserListResponse(
 
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
+
+data class RoleListResponse(
+    override val items: List<Role>,
+    override val meta: PageMeta,
+    override val sort: Map<String, Int>? = null,
+    val unknownField: MutableMap<String, Any?> = hashMapOf()
+) : PageResponse<Role>(items, meta, sort) {
+    @JsonAnySetter
+    fun setUnknownField(key: String, value: Any?) {
+        unknownField[key] = value
+    }
+
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
+}

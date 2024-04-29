@@ -35,8 +35,10 @@ abstract class AliveData<T>(private val key: String, id: String) {
         return map.keys
     }
 
-    fun update(_key: String, value: Any?): Boolean {
+    fun update(_key: String, _value: Any?): Boolean {
         val k = if (aliasKey.contains(_key)) this.key else _key
+        /*防止部分对象的id是非字符串类型的*/
+        val value = if (k == this.key) _value.toString() else _value
         if (value == null) {
             return map.remove(k) != null
         }
