@@ -9,7 +9,7 @@ import me.huanmeng.lazykook.entity.UserInfo
  * LazyKook<br>
  * @author huanmeng_qwq
  */
-class UserData : AliveData<UserData>("id", "") {
+class UserData(id: String) : AliveData<UserData>("id", id) {
     init {
         aliasKey += "userId"
     }
