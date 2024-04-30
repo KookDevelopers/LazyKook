@@ -14,11 +14,11 @@ import kotlin.reflect.KProperty
 data class GuildInfo(
     val id: String,
     val name: String,
-    val topic: String,
+    val topic: String?,
     @JsonProperty("master_id")
-    val masterId: String,
+    val masterId: String?,
     @JsonProperty("user_id")
-    val userId: String,
+    val userId: String?,
     val icon: String,
     @JsonProperty("notify_type")
     val notifyType: NotifyType,
