@@ -13,24 +13,25 @@ import kotlin.reflect.KProperty
 data class Channel(
     val id: String,
     val name: String,
-    @JsonProperty("user_id") val userId: String,
+    @JsonProperty("user_id") val userId: String?,//not category
     @JsonProperty("guild_id") val guildId: String,
-    val topic: String,
+    val topic: String?,//not category
     @JsonProperty("is_category") val isCategory: Boolean,
-    @JsonProperty("parent_id") val parentId: String,
+    @JsonProperty("parent_id") val parentId: String?,//not category
     val level: Int,
-    @JsonProperty("slow_mode") val slowMode: Int,
+    @JsonProperty("slow_mode") val slowMode: Int?,//not category
     val type: Int,
     @JsonProperty("last_msg_content")
-    val lastMsgContent: String,
+    val lastMsgContent: String?,//not category
     @JsonProperty("last_msg_id")
-    val lastMsgId: String,
+    val lastMsgId: String?,//not category
     @JsonProperty("permission_overwrites") val permissionOverwrites: List<PermissionOverwrite>,
     @JsonProperty("permission_users") val permissionUsers: List<PermissionUser>,
     @JsonProperty("permission_sync") val permissionSync: Int,
-    @JsonProperty("has_password") val hasPassword: Boolean,
+    @JsonProperty("has_password") val hasPassword: Boolean?,//not category
     @JsonProperty("limit_amount")
-    val limitAmount: Int,
+    val limitAmount: Int?,//not category
+    val channels: List<Channel>?,//only category
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
     @JsonAnySetter

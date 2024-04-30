@@ -68,28 +68,32 @@ class WebSocketClient(private val url: String, val root: LazyKook) {
     }
 
     private fun process(message: String) {
-        val signal = mapper.readValue(message, Signal::class.java)
-        if (signal.signal != -99) {
-            _sn = signal.signal
-            nextPingDelay += 500
-        }
-        root.eventManager.postEvent(ReceiverSignalEvent(signal))
-        when (signal.type) {
-            1 -> {
-                root.eventManager.postEvent(SignalHelloEvent(signal))
+        try {
+            val signal = mapper.readValue(message, Signal::class.java)
+            if (signal.signal != -99) {
+                _sn = signal.signal
+                nextPingDelay += 500
             }
+            root.eventManager.postEvent(ReceiverSignalEvent(signal))
+            when (signal.type) {
+                1 -> {
+                    root.eventManager.postEvent(SignalHelloEvent(signal))
+                }
 
-            0 -> {
-                if (signal.data is SignalData) {
-                    root.eventManager.postEvent(SignalExtraEvent(signal, signal.data))
-                    root.eventManager.postEvent(SignalExtraDataEvent(signal, signal.data, signal.data.extra))
+                0 -> {
+                    if (signal.data is SignalData) {
+                        root.eventManager.postEvent(SignalExtraEvent(signal, signal.data))
+                        root.eventManager.postEvent(SignalExtraDataEvent(signal, signal.data, signal.data.extra))
+                    }
+                }
+
+                3 -> {
+                    lastPongTime = System.currentTimeMillis()
+                    root.eventManager.postEvent(SignalPongEvent(signal))
                 }
             }
-
-            3 -> {
-                lastPongTime = System.currentTimeMillis()
-                root.eventManager.postEvent(SignalPongEvent(signal))
-            }
+        } catch (e: Exception) {
+            RuntimeException(message, e).printStackTrace()
         }
     }
 }
