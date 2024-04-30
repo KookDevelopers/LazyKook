@@ -11,6 +11,10 @@ repositories {
     maven("https://jitpack.io")
 }
 
+application {
+    mainClass = "unset"
+}
+
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     api("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.+")

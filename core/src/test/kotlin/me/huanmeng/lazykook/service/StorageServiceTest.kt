@@ -33,4 +33,11 @@ class StorageServiceTest : BotTest() {
         assertEquals(testRoleId, role.roleId)
         assertEquals("@全体成员", role.name)
     }
+
+    @Test
+    fun `test findChannel`() = runBlocking {
+        val channel = service.findChannel(testChannelId)
+        assertEquals(testChannelId, channel.channelId)
+        assertEquals(testGuildId, channel.guildId)
+    }
 }

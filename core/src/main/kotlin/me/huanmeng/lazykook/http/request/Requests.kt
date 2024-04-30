@@ -110,3 +110,39 @@ data class RoleListRequest(
     @JsonProperty("page_size")
     val pageSize: Int = 20,
 )
+
+// channel
+data class ChannelViewRequest(
+    @JsonProperty("target_id")
+    val channelId: String,
+    @JsonProperty("need_children")
+    val needChildren: Boolean = false
+)
+
+// message
+data class MessageCreateRequest(
+    @JsonProperty("target_id")
+    val targetId: String,
+    val content: String,
+    @JsonProperty("quote")
+    val quote: String? = null,
+    @JsonProperty("temp_target_id")
+    val tempTargetId: String? = null,
+    val nonce: String? = null,
+    val type: Int = 1,
+)
+
+data class MessageUpdateRequest(
+    @JsonProperty("target_id")
+    val targetId: String,
+    val content: String,
+    @JsonProperty("quote")
+    val quote: String? = null,
+    @JsonProperty("temp_target_id")
+    val tempTargetId: String? = null,
+)
+
+data class MessageDeleteRequest(
+    @JsonProperty("msg_id")
+    val msgId: String,
+)

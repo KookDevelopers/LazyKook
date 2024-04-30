@@ -32,5 +32,6 @@ open class BotTest {
         const val testGuildId = "2530876875583713"
         const val testUserId = "3672631392"
         const val testRoleId = "0"
+        const val testChannelId = "8709556018165485"
     }
 }

@@ -109,4 +109,36 @@ object Requests {
             apiMethod = HttpMethod.GET
         )
     }
+
+    object Channel {
+        val VIEW = APIRouter(
+            "/channel/view",
+            ChannelViewRequest::class.java,
+            me.huanmeng.lazykook.entity.Channel::class.java,
+            apiMethod = HttpMethod.GET
+        )
+    }
+
+    object Message {
+        val CREATE = APIRouter(
+            "/message/create",
+            MessageCreateRequest::class.java,
+            MessageCreateResponse::class.java,
+            apiMethod = HttpMethod.POST
+        )
+
+        val UPDATE = APIRouter(
+            "/message/update",
+            MessageUpdateRequest::class.java,
+            Any::class.java,
+            apiMethod = HttpMethod.POST
+        )
+
+        val DELETE = APIRouter(
+            "/message/delete",
+            MessageDeleteRequest::class.java,
+            Any::class.java,
+            apiMethod = HttpMethod.POST
+        )
+    }
 }

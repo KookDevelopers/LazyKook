@@ -133,3 +133,20 @@ data class RoleListResponse(
 
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
+
+// message
+data class MessageCreateResponse(
+    @JsonProperty("msg_id")
+    val msgId: String,
+    @JsonProperty("msg_timestamp")
+    val msgTimestamp: Long,
+    val nonce: String,
+    val unknownField: MutableMap<String, Any?> = hashMapOf()
+) {
+    @JsonAnySetter
+    fun setUnknownField(key: String, value: Any?) {
+        unknownField[key] = value
+    }
+
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
+}

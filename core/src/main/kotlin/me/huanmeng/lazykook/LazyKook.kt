@@ -18,17 +18,14 @@ open class LazyKook(val config: BotConfig) {
     val eventManager = EventManager()
     val storageService = StorageService(this)
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    protected var _isRunning: Boolean = false
-    val isRunning: Boolean
-        get() = _isRunning
-
+    var isRunning: Boolean = false
+        private set
 
     suspend fun start() {
         if (isRunning) {
             return
         }
-        _isRunning = true
+        isRunning = true
 
         val resp = http.http(Requests.GATEWAY, GatewayRequest())
         WebSocketClient(resp.url, this).start()
@@ -38,6 +35,6 @@ open class LazyKook(val config: BotConfig) {
         if (!isRunning) {
             return
         }
-        _isRunning = false
+        isRunning = false
     }
 }

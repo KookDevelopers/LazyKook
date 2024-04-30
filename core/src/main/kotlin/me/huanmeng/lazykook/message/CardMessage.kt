@@ -3,6 +3,7 @@ package me.huanmeng.lazykook.message
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue
 import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 
 /**
  * 2024/4/16<br>
@@ -10,10 +11,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
  * @author huanmeng_qwq
  */
 
+@JsonSerialize(using = CardMessageSerializer::class)
 data class CardMessage(
     val elements: List<Card>
 )
-
 
 // Card
 @JsonDeserialize(using = CardDeserializer::class)

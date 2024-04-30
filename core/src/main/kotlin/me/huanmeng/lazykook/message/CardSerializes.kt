@@ -1,8 +1,11 @@
 package me.huanmeng.lazykook.message
 
+import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonDeserializer
+import com.fasterxml.jackson.databind.JsonSerializer
+import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 /**
@@ -52,6 +55,16 @@ class CardDeserializer : JsonDeserializer<Card>() {
         return Card(modules, type, theme, color, size)
     }
 
+}
+
+class CardMessageSerializer : JsonSerializer<CardMessage>() {
+    override fun serialize(value: CardMessage, gen: JsonGenerator, serializers: SerializerProvider) {
+        gen.writeStartArray()
+        value.elements.forEach {
+            gen.writeObject(it)
+        }
+        gen.writeEndArray()
+    }
 }
 
 class ContextElementDeserializer : JsonDeserializer<ContextElement>() {
