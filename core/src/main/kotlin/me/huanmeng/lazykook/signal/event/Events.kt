@@ -74,7 +74,7 @@ data class TextMessageExtraData(
 
 sealed class ResourceMessageExtraData(
     open val type: SignalEventType,
-    open val code: String,
+    open val code: String?,
     @JsonProperty("guild_id")
     open val guildId: String,
     open val attachments: Attachments,
@@ -83,7 +83,7 @@ sealed class ResourceMessageExtraData(
 
 data class ImageMessageExtraData(
     override val type: SignalEventType,
-    override val code: String,
+    override val code: String?,
     @JsonProperty("guild_id")
     override val guildId: String,
     override val attachments: Attachments,
@@ -100,7 +100,7 @@ data class ImageMessageExtraData(
 
 data class VideoMessageExtraData(
     override val type: SignalEventType,
-    override val code: String,
+    override val code: String?,
     @JsonProperty("guild_id")
     override val guildId: String,
     override val attachments: Attachments,
