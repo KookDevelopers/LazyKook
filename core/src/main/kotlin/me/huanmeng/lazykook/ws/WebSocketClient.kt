@@ -23,21 +23,20 @@ class WebSocketClient(private val url: String, val root: LazyKook) {
     private var nextPingDelay = 1000 * 26
     private var lastPingTime = System.currentTimeMillis()
     private var lastPongTime = System.currentTimeMillis()
-    private var _sn: Int = 0
     private val client = HttpClient(CIO) {
         install(WebSockets)
     }
 
-    val sn: Int
-        get() = _sn
+    var sn: Int = 0
+        private set
 
     suspend fun start() {
         client.webSocket(url) {
             launch {
                 while (root.isRunning) {
-                    if (System.currentTimeMillis() > lastPingTime + min(nextPingDelay, 1000 * 35)) {
+                    if (System.currentTimeMillis() > lastPingTime + min(nextPingDelay, 1000 * 33)) {
                         root.eventManager.postEvent(SignalPingEvent)
-                        send("{\"s\":2,\"sn\":$_sn}")
+                        send("{\"s\":2,\"sn\":$sn}")
                         nextPingDelay = 1000 * 26
                         lastPingTime = System.currentTimeMillis()
                     }
@@ -68,10 +67,12 @@ class WebSocketClient(private val url: String, val root: LazyKook) {
     }
 
     private fun process(message: String) {
+        var snChanged = false
         try {
             val signal = mapper.readValue(message, Signal::class.java)
             if (signal.signal != -99) {
-                _sn = signal.signal
+                snChanged = true
+                sn = signal.signal
                 nextPingDelay += 500
             }
             root.eventManager.postEvent(ReceiverSignalEvent(signal))
@@ -93,6 +94,13 @@ class WebSocketClient(private val url: String, val root: LazyKook) {
                 }
             }
         } catch (e: Exception) {
+            if (!snChanged) {
+                val node = mapper.readTree(message)
+                if (node.has("sn")) {
+                    sn = node.get("sn").asInt()
+                    nextPingDelay += 10
+                }
+            }
             RuntimeException(message, e).printStackTrace()
         }
     }
