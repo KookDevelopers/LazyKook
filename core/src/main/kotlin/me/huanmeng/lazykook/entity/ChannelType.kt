@@ -9,4 +9,5 @@ enum class ChannelType {
     GROUP,
     PERSON,
     BROADCAST,
+    WEBHOOK_CHALLENGE,
 }

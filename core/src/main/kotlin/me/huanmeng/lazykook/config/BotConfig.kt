@@ -32,7 +32,9 @@ enum class SocketMode(vararg alias: String) {
 }
 
 data class WebHookConfig(
-    var url: String? = null,
+    var host: String = "0.0.0.0",
     var port: Int = 8080,
-    var path: String = "/kook"
+    var path: String = "/kook",
+    var encryptKey: String = "",
+    var verifyToken: String = ""
 )

@@ -10,6 +10,7 @@ import me.huanmeng.lazykook.signal.event.SignalData
 import me.huanmeng.lazykook.signal.event.SignalEventType
 import me.huanmeng.lazykook.signal.event.SignalEventType.SYSTEM
 import me.huanmeng.lazykook.signal.event.SignalSystemEventType
+import me.huanmeng.lazykook.webhook.WebhookSignalData
 
 /**
  * 2024/4/18<br>
@@ -47,7 +48,16 @@ class SignalExtraDeserializer : JsonDeserializer<Any>() {
             return null
         }
         if (node.has("channel_type")) {
-            return ctxt.readTreeAsValue(node, SignalData::class.java)
+            val channelType = node["channel_type"].asText()
+            return when (channelType) {
+                "WEBHOOK_CHALLENGE" -> {
+                    ctxt.readTreeAsValue(node, WebhookSignalData::class.java)
+                }
+
+                else -> {
+                    ctxt.readTreeAsValue(node, SignalData::class.java)
+                }
+            }
         }
         return ctxt.readTreeAsValue(node, Map::class.java)
     }
