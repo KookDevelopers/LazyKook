@@ -31,7 +31,7 @@ dependencies {
     api("com.huanmeng-qwq:event-core:1.0.4"){
         exclude(group = "com.google.guava")
     }
-    api("com.google.guava:guava:33.1-jre")
+    api("com.google.guava:guava:33.1.0-jre")
 }
 
 tasks.test {
