@@ -27,7 +27,7 @@ dependencies {
     api("io.ktor:ktor-client-cio-jvm")
     api("io.ktor:ktor-client-websockets")
 
-    implementation("org.bspfsystems:yamlconfiguration:2.0.1")
+    implementation("org.bspfsystems:yamlconfiguration:2.0.2")
     api("com.huanmeng-qwq:event-core:1.0.4"){
         exclude(group = "com.google.guava")
     }
