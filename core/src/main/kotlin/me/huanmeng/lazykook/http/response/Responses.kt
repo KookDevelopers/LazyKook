@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.http.response
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.entity.*
@@ -55,13 +56,10 @@ data class GuildViewResponse(
     val status: Int,
     @JsonProperty("auto_delete_time") val autoDeleteTime: String,
     @JsonProperty("user_config") val userConfig: Map<String, Any>?,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -71,13 +69,12 @@ data class MuteData(
 )
 
 data class GuildMuteListResponse(
-    val mic: MuteData, val headset: MuteData, val unknownField: MutableMap<String, Any?> = hashMapOf()
+    val mic: MuteData,
+    val headset: MuteData,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
+    val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -87,13 +84,8 @@ data class GuildBoostHistory(
     @JsonProperty("start_time") val startTime: Int,
     @JsonProperty("end_time") val endTime: Int,
     val user: User,
-    val unknownField: MutableMap<String, Any?> = hashMapOf()
+    @field:JsonAnySetter @get:JsonAnyGetter val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -110,13 +102,10 @@ data class GuildUserListResponse(
     @JsonProperty("user_count") val userCount: Int,
     @JsonProperty("online_count") val onlineCount: Int,
     @JsonProperty("offline_count") val offlineCount: Int,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : PageResponse<User>(items, meta, sort) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -124,29 +113,21 @@ data class RoleListResponse(
     override val items: List<Role>,
     override val meta: PageMeta,
     override val sort: Map<String, Int>? = null,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : PageResponse<Role>(items, meta, sort) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
 // message
 data class MessageCreateResponse(
-    @JsonProperty("msg_id")
-    val msgId: String,
-    @JsonProperty("msg_timestamp")
-    val msgTimestamp: Long,
+    @JsonProperty("msg_id") val msgId: String,
+    @JsonProperty("msg_timestamp") val msgTimestamp: Long,
     val nonce: String,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }

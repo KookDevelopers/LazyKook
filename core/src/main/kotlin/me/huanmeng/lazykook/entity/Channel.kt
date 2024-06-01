@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.entity
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.locateValue
@@ -32,13 +33,10 @@ data class Channel(
     @JsonProperty("limit_amount")
     val limitAmount: Int?,//not category
     val channels: List<Channel>?,//only category
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 

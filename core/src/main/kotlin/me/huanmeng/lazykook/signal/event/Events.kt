@@ -1,5 +1,6 @@
 package me.huanmeng.lazykook.signal.event
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.entity.*
@@ -32,6 +33,8 @@ data class TextMessageExtraData(
     @JsonProperty("mention_here")
     override val mentionHere: Boolean,
     override val author: User,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : StringMessageExtraData(type, guildId, channelName, mention, mentionAll, mentionRoles, mentionHere, author) {
     override fun equals(other: Any?): Boolean {
@@ -64,11 +67,6 @@ data class TextMessageExtraData(
         return result
     }
 
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -88,13 +86,10 @@ data class ImageMessageExtraData(
     override val guildId: String,
     override val attachments: Attachments,
     override val author: User,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : ResourceMessageExtraData(type, code, guildId, attachments, author) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -105,13 +100,10 @@ data class VideoMessageExtraData(
     override val guildId: String,
     override val attachments: Attachments,
     override val author: User,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : ResourceMessageExtraData(type, code, guildId, attachments, author) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -122,14 +114,10 @@ data class FileMessageExtraData(
     override val guildId: String,
     override val attachments: Attachments,
     override val author: User,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
-
 ) : ResourceMessageExtraData(type, code, guildId, attachments, author) {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -151,6 +139,8 @@ data class KMarkdownMessageExtraData(
     val navChannels: Array<Any>,
     val code: String,
     val kmarkdown: Map<String, Any>,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : StringMessageExtraData(type, guildId, channelName, mention, mentionAll, mentionRoles, mentionHere, author) {
     override fun equals(other: Any?): Boolean {
@@ -189,11 +179,6 @@ data class KMarkdownMessageExtraData(
         return result
     }
 
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -214,6 +199,8 @@ data class CardMessageExtraData(
     @JsonProperty("nav_channels")
     val navChannels: Array<Any>,
     val code: String,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : StringMessageExtraData(type, guildId, channelName, mention, mentionAll, mentionRoles, mentionHere, author) {
     override fun equals(other: Any?): Boolean {
@@ -250,11 +237,6 @@ data class CardMessageExtraData(
         return result
     }
 
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
@@ -263,13 +245,10 @@ data class ItemMessageExtraData(
     val mention: Array<Any>,
     val author: User,
     val kmarkdown: Map<String, Any>,
+    @field:JsonAnySetter
+    @get:JsonAnyGetter
     val unknownField: MutableMap<String, Any?> = hashMapOf()
 ) : SignalExtraData() {
-    @JsonAnySetter
-    fun setUnknownField(key: String, value: Any?) {
-        unknownField[key] = value
-    }
-
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
