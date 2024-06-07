@@ -105,7 +105,8 @@ object Requests {
             "/user/me",
             Any::class.java,
             me.huanmeng.lazykook.entity.User::class.java,
-            apiMethod = HttpMethod.GET
+            apiMethod = HttpMethod.GET,
+            requestIsNull = true
         )
     }
 
