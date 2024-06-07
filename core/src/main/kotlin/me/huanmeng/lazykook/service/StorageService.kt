@@ -30,6 +30,9 @@ class StorageService(val lazyKook: LazyKook) {
     val channelManager = ChannelManager()
     val roleManagers: MutableMap<String, RoleManager> = mutableMapOf()
 
+    lateinit var botUser: UserData
+        private set
+
     fun updateGuild(guildId: String, data: Any): GuildData {
         val guildData = guildManager.getOrAlive(guildId) {
             GuildData(guildId)
@@ -65,6 +68,20 @@ class StorageService(val lazyKook: LazyKook) {
                     if (guildId != null) {
                         it.updateNickname(guildId, response.nickname)
                     }
+                })
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
+
+    suspend fun findMe(): UserData {
+        return if (::botUser.isInitialized) botUser else run {
+            try {
+                val response = lazyKook.http.http(Requests.User.ME, null)
+                userManager.alive(UserData(response.id).also {
+                    it.update(response)
+                    botUser = it
                 })
             } catch (e: Exception) {
                 throw e

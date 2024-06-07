@@ -58,11 +58,12 @@ class KHttp(private val kook: LazyKook) {
 
     suspend fun <REQ : Any, RESP : Any> http(
         apiRouter: APIRouter<Class<REQ>, Class<RESP>>,
-        request: REQ,
+        request: REQ?,
         respCallback: ((String) -> Unit) = {}
     ): RESP {
-        val map =
+        val map = if (!apiRouter.requestIsNull)
             mapper.readValue(mapper.writeValueAsString(request), object : TypeReference<Map<String, Any?>>() {})
+        else emptyMap()
 
         val responseJson = when (apiRouter.apiMethod) {
             GET -> this::get

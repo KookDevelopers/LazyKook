@@ -1,6 +1,9 @@
 package me.huanmeng.lazykook.jkook
 
+import kotlinx.coroutines.runBlocking
 import me.huanmeng.lazykook.LazyKook
+import me.huanmeng.lazykook.jkook.command.CommandManagerImpl
+import me.huanmeng.lazykook.jkook.entity.UserImpl
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import snw.jkook.Core
@@ -20,8 +23,18 @@ import snw.jkook.scheduler.Scheduler
  */
 class CoreImpl(val lazyKook: LazyKook) : Core {
     private val _logger = LoggerFactory.getLogger("LazyKook")
+    private val _httpAPI by lazy { HttpAPIImpl(lazyKook) }
+    private val _commandManager by lazy {
+        CommandManagerImpl()
+    }
+    private val _me by lazy {
+        runBlocking {
+            UserImpl(lazyKook.storageService.findMe())
+        }
+    }
+
     override fun getHttpAPI(): HttpAPI {
-        TODO("Not yet implemented")
+        return _httpAPI
     }
 
     override fun getAPIVersion(): String = "0.50.0"
@@ -47,7 +60,7 @@ class CoreImpl(val lazyKook: LazyKook) : Core {
     }
 
     override fun getCommandManager(): CommandManager {
-        TODO("Not yet implemented")
+        return _commandManager
     }
 
     override fun getPluginManager(): PluginManager {
@@ -55,11 +68,11 @@ class CoreImpl(val lazyKook: LazyKook) : Core {
     }
 
     override fun getUser(): User {
-        TODO("Not yet implemented")
+        return _me
     }
 
     override fun setUser(p0: User?) {
-        TODO("Not yet implemented")
+        error("Not yet implemented")
     }
 
     override fun getUnsafe(): Unsafe {
@@ -67,6 +80,7 @@ class CoreImpl(val lazyKook: LazyKook) : Core {
     }
 
     override fun shutdown() {
+        lazyKook.stop()
         TODO("Not yet implemented")
     }
 }

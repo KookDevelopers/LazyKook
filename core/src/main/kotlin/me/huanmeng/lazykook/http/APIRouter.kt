@@ -18,7 +18,9 @@ data class APIRouter<REQ : Class<*>, RESP : Class<*>>(
     @get:JvmName("version")
     val version: APIVersion = APIVersion.V3,
     @get:JvmName("apiMethod")
-    val apiMethod: HttpMethod = HttpMethod.POST
+    val apiMethod: HttpMethod = HttpMethod.POST,
+    @get:JvmName("empty")
+    val requestIsNull: Boolean = false,
 ) {
     fun buildPath(): String {
         return version.versionPath + path
@@ -96,6 +98,12 @@ object Requests {
         val VIEW = APIRouter(
             "/user/view",
             UserViewRequest::class.java,
+            me.huanmeng.lazykook.entity.User::class.java,
+            apiMethod = HttpMethod.GET
+        )
+        val ME = APIRouter(
+            "/user/me",
+            Any::class.java,
             me.huanmeng.lazykook.entity.User::class.java,
             apiMethod = HttpMethod.GET
         )

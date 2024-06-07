@@ -1,6 +1,7 @@
 package me.huanmeng.lazykook.jkook.entity
 
-import me.huanmeng.lazykook.entity.User
+import me.huanmeng.lazykook.alive.type.UserData
+import me.huanmeng.lazykook.annotation.ByName
 import me.huanmeng.lazykook.jkook.JIntimacyInfo
 import me.huanmeng.lazykook.jkook.JUser
 import snw.jkook.entity.Guild
@@ -15,16 +16,28 @@ import snw.jkook.util.PageIterator
  * LazyKook<br>
  * @author huanmeng_qwq
  */
-class UserImpl(private val user: User) : JUser {
+class UserImpl(private val user: UserData) : JUser {
+    private val vipAvatar: String by user
+    private val avatar: String by user
+    private val identifyNum: Any by user
+    private val status: Any? by user
+
+    @ByName("is_vip")
+    private val isVip: Boolean by user
+
+    @ByName("bot")
+    private val isBot: Boolean by user
+    private val online: Boolean by user
+
     override fun getName(): String {
         return user.username
     }
 
     override fun getAvatarUrl(vip: Boolean): String {
         if (vip) {
-            return user.vipAvatar
+            return vipAvatar
         }
-        return user.avatar
+        return avatar
     }
 
     override fun getId(): String {
@@ -44,23 +57,23 @@ class UserImpl(private val user: User) : JUser {
     }
 
     override fun getIdentifyNumber(): Int {
-        return user.identifyNum.toInt()
+        return identifyNum.toString().toInt()
     }
 
     override fun isVip(): Boolean {
-        return user.unknownField["is_vip"]?.toString().toBoolean()
+        return isVip
     }
 
     override fun isBot(): Boolean {
-        return user.bot
+        return isBot
     }
 
     override fun isOnline(): Boolean {
-        return user.online
+        return online
     }
 
     override fun isBanned(): Boolean {
-        return user.unknownField["status"]?.toString()?.toInt() == 10
+        return status?.toString()?.toInt() == 10
     }
 
     override fun getRoles(guild: Guild?): MutableCollection<Int> {
