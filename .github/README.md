@@ -14,7 +14,6 @@
 ```shell
 cd core
 mkdir run
-cd run
-echo "token: xxx" > config.yml
+echo "token: xxx" > run/config.yml
 gradlew test
 ```
