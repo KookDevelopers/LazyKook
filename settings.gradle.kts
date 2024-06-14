@@ -5,3 +5,4 @@ rootProject.name = "LazyKook"
 include("adapter:jkook")
 include("core")
 findProject(":adapter:jkook")?.name = "jkook"
+include("code-gen")

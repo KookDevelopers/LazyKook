@@ -1,0 +1,41 @@
+{
+  "id": {
+    "type": "string"
+  },
+  "username": {
+    "type": "string"
+  },
+  "identifyNum": {
+    "type": "string",
+    "field": "identify_num",
+    "supportTypes": [
+      "string",
+      "int"
+    ]
+  },
+  "online": {
+    "type": "boolean"
+  },
+  "avatar": {
+    "type": "string"
+  },
+  "vipAvatar": {
+    "type": "string",
+    "field": "vip_avatar"
+  },
+  "bot": {
+    "type": "boolean"
+  },
+  "status": {
+    "type": "int"
+  },
+  "mobileVerified": {
+    "type": "boolean"
+  },
+  "nickname": {
+    "type": "string"
+  },
+  "roles": {
+    "type": "array:int"
+  }
+}
