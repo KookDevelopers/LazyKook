@@ -30,7 +30,9 @@ data class PageMeta(
 )
 
 data class GuildListResponse(
-    override val items: List<GuildInfo>, override val meta: PageMeta, override val sort: Map<String, Int>? = null
+    override val items: List<GuildInfo>,
+    override val meta: PageMeta,
+    override val sort: Map<String, Int>? = null
 ) : PageResponse<GuildInfo>(items, meta, sort)
 
 data class GuildViewResponse(
