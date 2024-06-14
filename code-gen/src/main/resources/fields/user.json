@@ -30,7 +30,8 @@
     "type": "int"
   },
   "mobileVerified": {
-    "type": "boolean"
+    "type": "boolean",
+    "field": "mobile_verified"
   },
   "nickname": {
     "type": "string"
