@@ -146,3 +146,8 @@ data class MessageDeleteRequest(
     @JsonProperty("msg_id")
     val msgId: String,
 )
+
+data class MessageViewRequest(
+    @JsonProperty("msg_id")
+    val msgId: String,
+)

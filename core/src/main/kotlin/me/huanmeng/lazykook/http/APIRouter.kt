@@ -1,7 +1,9 @@
 package me.huanmeng.lazykook.http
 
+import com.fasterxml.jackson.databind.JsonNode
 import me.huanmeng.lazykook.http.request.*
 import me.huanmeng.lazykook.http.response.*
+import me.huanmeng.lazykook.message.KMarkdown
 
 /**
  * 2024/4/15<br>
@@ -148,6 +150,12 @@ object Requests {
             MessageDeleteRequest::class.java,
             Any::class.java,
             apiMethod = HttpMethod.POST
+        )
+        val VIEW = APIRouter(
+            "/message/view",
+            MessageViewRequest::class.java,
+            JsonNode::class.java,
+            apiMethod = HttpMethod.GET
         )
     }
 }
