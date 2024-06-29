@@ -1,0 +1,12 @@
+{
+  "nickname": {
+    "modifier": "val",
+    "type": "String?",
+    "get": "_nickname.firstNotNullOfOrNull { it.value }"
+  },
+  "_nickname": {
+    "modifier": "private val",
+    "type": "MutableMap<String, String>",
+    "default": "hashMapOf()"
+  }
+}

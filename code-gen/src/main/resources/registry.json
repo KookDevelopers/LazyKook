@@ -1,0 +1,11 @@
+{
+  "fields": [
+    "user"
+  ],
+  "methods": {
+    "user": "user"
+  },
+  "extra": {
+    "user": "user"
+  }
+}

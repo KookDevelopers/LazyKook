@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.0.0"
-    id("io.ktor.plugin") version "2.3.12"
+    id("io.github.goooler.shadow") version "8.1.8"
 }
 
 group = "com.huanmeng-qwq.lazykook"

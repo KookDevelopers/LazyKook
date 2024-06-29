@@ -1,0 +1,15 @@
+{
+  "update": [
+    {
+      "class": "me.huanmeng.lazykook.entity.User",
+      "type": "COPY_FROM"
+    },
+    {
+      "class": "me.huanmeng.lazykook.entity.UserInfo",
+      "type": "COPY_FROM"
+    }
+  ],
+  "updateNickname(guildId: String, nickname: String)": "this._nickname[guildId] = nickname",
+  "getNickname(guildId: String): String?": "return _nickname[guildId]",
+  "getNicknames(): Map<String, String>": "return _nickname.toMap()"
+}

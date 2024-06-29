@@ -1,4 +1,5 @@
 {
+  "class": "UserData",
   "id": {
     "type": "string"
   },
@@ -32,9 +33,6 @@
   "mobileVerified": {
     "type": "boolean",
     "field": "mobile_verified"
-  },
-  "nickname": {
-    "type": "string"
   },
   "roles": {
     "type": "array:int"

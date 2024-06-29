@@ -1,4 +1,4 @@
-package me.huanmeng.lazykook.codegen.model
+package me.huanmeng.lazykook.codegen.model.field
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.codegen.Type

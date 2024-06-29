@@ -16,7 +16,9 @@ application {
 }
 
 sourceSets {
-    create("code-gen")//todo
+    main {
+        kotlin.srcDirs("src/main/codegen")
+    }
 }
 
 dependencies {
@@ -36,6 +38,21 @@ dependencies {
         exclude(group = "com.google.guava")
     }
     api("com.google.guava:guava:33.2.1-jre")
+}
+val codegenTask = tasks.create("codegen") {
+    group = "LazyKook"
+    dependsOn(project(":code-gen").tasks.named("shadowJar"))
+    doLast {
+        val file = sourceSets.main.get().kotlin.srcDirs.last()
+        val outputFile = project(":code-gen").tasks.named("shadowJar").get().outputs.files
+        javaexec {
+            classpath(outputFile.files)
+            mainClass = "me.huanmeng.lazykook.codegen.Main"
+            val destFile = file.resolve("me/huanmeng/lazykook/alive/type")
+            destFile.mkdirs()
+            args = arrayListOf(destFile.absolutePath)
+        }
+    }
 }
 
 tasks.test {
