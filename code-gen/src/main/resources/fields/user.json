@@ -3,6 +3,11 @@
   "id": {
     "type": "string"
   },
+  "userId": {
+    "alias": true,
+    "type": "string",
+    "proxy": "id"
+  },
   "username": {
     "type": "string"
   },

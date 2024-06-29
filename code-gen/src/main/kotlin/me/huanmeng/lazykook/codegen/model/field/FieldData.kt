@@ -15,4 +15,7 @@ data class FieldData(
     val supportTypes: List<Type> = emptyList(),
     @JsonProperty("id")
     val isId: Boolean = false,
+    @JsonProperty("alias")
+    val isAlias: Boolean = false,
+    val proxy: String? = null,
 )

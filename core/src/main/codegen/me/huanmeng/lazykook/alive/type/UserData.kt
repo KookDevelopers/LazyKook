@@ -6,6 +6,10 @@ package me.huanmeng.lazykook.alive.type
 import me.huanmeng.lazykook.alive.AliveData
 
 class UserData(id: String) : AliveData<UserData>("id", id) {
+    init {
+        aliasKey += "userId"
+    }
+
     val bot: Boolean by this
     val roles: Array<Int> by this
     val mobileVerified: Boolean by this
@@ -15,6 +19,9 @@ class UserData(id: String) : AliveData<UserData>("id", id) {
             return visit<Any, Any>("identify_num").toString()
         }
     val avatar: String by this
+
+    @me.huanmeng.lazykook.annotation.ByName("id")
+    val userId: String by this
     val vipAvatar: String by this
     val status: Int by this
     val username: String by this
@@ -40,6 +47,7 @@ class UserData(id: String) : AliveData<UserData>("id", id) {
     fun update(t: me.huanmeng.lazykook.entity.UserInfo) {
         copyFrom(t)
     }
+
 
     override fun update(data: UserData) {
     }
