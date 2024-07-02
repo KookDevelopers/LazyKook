@@ -1,0 +1,13 @@
+{
+  "class": "ChannelData",
+  "id": {
+    "type": "string"
+  },
+  "channelId": {
+    "type": "string",
+    "proxy": "id"
+  },
+  "guildId": {
+    "type": "string"
+  }
+}

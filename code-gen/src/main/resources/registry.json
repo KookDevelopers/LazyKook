@@ -1,6 +1,7 @@
 {
   "fields": [
-    "user"
+    "user",
+    "channel"
   ],
   "methods": {
     "user": "user"
