@@ -1,0 +1,8 @@
+{
+  "update": [
+    {
+      "class": "me.huanmeng.lazykook.entity.Channel",
+      "type": "COPY_FROM"
+    }
+  ]
+}

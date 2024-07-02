@@ -11,6 +11,11 @@ class ChannelData(id: String) : AliveData<ChannelData>("id", id) {
     @me.huanmeng.lazykook.annotation.ByName("id")
     val channelId: String by this
 
+    fun update(t: me.huanmeng.lazykook.entity.Channel) {
+        copyFrom(t)
+    }
+
+
     override fun update(data: ChannelData) {
     }
 }

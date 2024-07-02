@@ -28,6 +28,7 @@ class UserData(id: String) : AliveData<UserData>("id", id) {
     val nickname: String?
         get() = _nickname.firstNotNullOfOrNull { it.value }
     private val _nickname: MutableMap<String, String> = hashMapOf()
+
     fun updateNickname(guildId: String, nickname: String) {
         this._nickname[guildId] = nickname
     }

@@ -4,7 +4,8 @@
     "channel"
   ],
   "methods": {
-    "user": "user"
+    "user": "user",
+    "channel": "channel"
   },
   "extra": {
     "user": "user"

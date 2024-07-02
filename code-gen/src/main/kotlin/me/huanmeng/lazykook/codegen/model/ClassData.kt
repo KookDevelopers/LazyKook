@@ -57,6 +57,10 @@ data class ClassData(
             field.write(writer, name)
         }
 
+        if (fields.isNotEmpty() || extraFields.isNotEmpty()) {
+            writer.appendLine()
+        }
+
         methods.forEach {
             it.write(writer)
         }
