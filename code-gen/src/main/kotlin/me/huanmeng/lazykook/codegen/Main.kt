@@ -66,13 +66,13 @@ object Main {
             classBuilder.appendLine("\toverride fun update(data: ${className}) {")
             classBuilder.appendLine("\t}")
             classBuilder.appendLine("}")
-            dest.resolve("${className}.kt").writeText(classBuilder.toString())
+            dest.resolve("${className}.kt").writeText(classBuilder.toString().replace("\t", "    "))
         }
     }
 
     fun doc(sb: StringBuilder) {
         sb.appendLine("/**")
-        sb.appendLine("* This file is generated automatically, please do not modify it")
-        sb.appendLine("*/")
+        sb.appendLine(" * This file is generated automatically, please do not modify it")
+        sb.appendLine(" */")
     }
 }

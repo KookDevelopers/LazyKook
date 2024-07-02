@@ -24,23 +24,24 @@ data class ClassData(
     fun gen(writer: StringBuilder) {
         val alias = fields.filter { it.value.isAlias }.map { it.key }
         if (alias.isNotEmpty()) {
-            writer.appendLine("\tinit{")
+            writer.appendLine("\tinit {")
             alias.forEach {
                 writer.appendLine("\t\taliasKey += \"${it}\"")
             }
+            writer.appendLine("\t}")
+            writer.appendLine()
         }
-        writer.appendLine("\t}")
         fields.forEach { (fieldName, fieldData) ->
             if (fieldName == "id" || fieldData.isId) {
                 return@forEach
             }
             if (fieldData.proxy != null) {
                 writer.appendLine()
-                writer.appendLine("@me.huanmeng.lazykook.annotation.ByName(\"${fieldData.proxy}\")")
+                writer.appendLine("\t@me.huanmeng.lazykook.annotation.ByName(\"${fieldData.proxy}\")")
             }
-            writer.append("\tval $fieldName: ${fieldData.type.text} ")
+            writer.append("\tval $fieldName: ${fieldData.type.text}")
             if (fieldData.supportTypes.isEmpty()) {
-                writer.appendLine("by this")
+                writer.appendLine(" by this")
             } else {
                 writer.appendLine()
                 writer.appendLine("\t\tget() {")
