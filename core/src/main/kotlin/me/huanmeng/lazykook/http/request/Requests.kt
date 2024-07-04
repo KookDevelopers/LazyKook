@@ -151,3 +151,20 @@ data class MessageViewRequest(
     @JsonProperty("msg_id")
     val msgId: String,
 )
+
+data class VoiceJoinRequest(
+    @JsonProperty("channel_id")
+    val channelId: String,
+    @JsonProperty("audio_ssrc")
+    val audioSsrc: String? = null,
+    @JsonProperty("audio_pt")
+    val audioPt: String? = null,
+    @JsonProperty("rtcp_mux")
+    val rtcpMux: Boolean? = null,
+    val password: String? = null,
+)
+
+data class VoiceLeaveRequest(
+    @JsonProperty("channel_id")
+    val channelId: String,
+)

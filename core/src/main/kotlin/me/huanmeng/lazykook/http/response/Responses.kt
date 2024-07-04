@@ -133,3 +133,13 @@ data class MessageCreateResponse(
 ) {
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
+
+data class VoiceJoinResponse(
+    val ip: String,
+    val port: String,
+    val rtcp_mux: Boolean,
+    val rtcp_port: Int,
+    val bitrate: Int,
+    val audio_ssrc: String,
+    val audio_pt: String
+)

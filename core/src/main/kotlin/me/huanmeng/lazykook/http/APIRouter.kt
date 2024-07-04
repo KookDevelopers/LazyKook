@@ -3,7 +3,6 @@ package me.huanmeng.lazykook.http
 import com.fasterxml.jackson.databind.JsonNode
 import me.huanmeng.lazykook.http.request.*
 import me.huanmeng.lazykook.http.response.*
-import me.huanmeng.lazykook.message.KMarkdown
 
 /**
  * 2024/4/15<br>
@@ -156,6 +155,19 @@ object Requests {
             MessageViewRequest::class.java,
             JsonNode::class.java,
             apiMethod = HttpMethod.GET
+        )
+    }
+
+    object Voice {
+        val JOIN = APIRouter(
+            "/voice/join",
+            VoiceJoinRequest::class.java,
+            VoiceJoinResponse::class.java,
+        )
+        val LEAVE = APIRouter(
+            "/voice/leave",
+            VoiceLeaveRequest::class.java,
+            Any::class.java,
         )
     }
 }
