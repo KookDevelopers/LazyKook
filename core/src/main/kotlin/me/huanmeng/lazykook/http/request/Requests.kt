@@ -168,5 +168,3 @@ data class VoiceLeaveRequest(
     @JsonProperty("channel_id")
     val channelId: String,
 )
-
-class VoiceListRequest()
