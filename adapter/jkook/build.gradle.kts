@@ -4,7 +4,6 @@ plugins {
 }
 
 group = "com.huanmeng-qwq.lazykook"
-version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -14,7 +13,7 @@ repositories {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     implementation(libs.jkook)
-    implementation(project(":core"))
+    implementation(project(":lazykook"))
 }
 
 tasks.test {

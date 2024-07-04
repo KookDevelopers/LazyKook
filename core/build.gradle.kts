@@ -4,7 +4,6 @@ plugins {
 }
 
 group = "com.huanmeng-qwq.lazykook"
-version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -21,6 +20,7 @@ sourceSets {
     }
 }
 
+println("$version")
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     api(libs.jackson.kt)
