@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
-import me.huanmeng.lazykook.entity.ChannelType
+import me.huanmeng.lazykook.enums.EventType
 import me.huanmeng.lazykook.signal.event.SignalData
 import me.huanmeng.lazykook.signal.event.SignalEventType
 import me.huanmeng.lazykook.signal.event.SignalEventType.SYSTEM
@@ -20,7 +20,7 @@ import me.huanmeng.lazykook.webhook.WebhookSignalData
 class SignalEventDeserializer : JsonDeserializer<SignalData>() {
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): SignalData {
         val tree = p.codec.readValue(p, ObjectNode::class.java)
-        val channelType = ctxt.readTreeAsValue(tree["channel_type"], ChannelType::class.java)
+        val eventType = ctxt.readTreeAsValue(tree["channel_type"], EventType::class.java)
         val type = ctxt.readTreeAsValue(tree["type"], SignalEventType::class.java)
         val targetId = tree["target_id"].asText()
         val authorId = tree["author_id"].asText()
@@ -37,7 +37,7 @@ class SignalEventDeserializer : JsonDeserializer<SignalData>() {
                 ctxt.readTreeAsValue(extraNode, it)
             } ?: throw IllegalArgumentException("type: $type, extra: $extraNode")
         }
-        return SignalData(channelType, type, targetId, authorId, content, msgId, msgTimestamp, nonce, extra)
+        return SignalData(eventType, type, targetId, authorId, content, msgId, msgTimestamp, nonce, extra)
     }
 }
 

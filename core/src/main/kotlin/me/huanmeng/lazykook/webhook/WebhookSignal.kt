@@ -1,7 +1,7 @@
 package me.huanmeng.lazykook.webhook
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import me.huanmeng.lazykook.entity.ChannelType
+import me.huanmeng.lazykook.enums.EventType
 import me.huanmeng.lazykook.signal.event.SignalEventType
 
 /**
@@ -12,7 +12,7 @@ import me.huanmeng.lazykook.signal.event.SignalEventType
 data class WebhookSignalData(
     val type: SignalEventType,
     @JsonProperty("channel_type")
-    val channelType: ChannelType,
+    val eventType: EventType,
     val challenge: String,
     @JsonProperty("verify_token")
     val verifyToken: String,

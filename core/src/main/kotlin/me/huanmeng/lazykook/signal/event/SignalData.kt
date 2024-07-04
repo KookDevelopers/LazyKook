@@ -3,7 +3,7 @@ package me.huanmeng.lazykook.signal.event
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import me.huanmeng.lazykook.entity.ChannelType
+import me.huanmeng.lazykook.enums.EventType
 import me.huanmeng.lazykook.mapper
 import me.huanmeng.lazykook.signal.SignalEventDeserializer
 
@@ -15,7 +15,7 @@ import me.huanmeng.lazykook.signal.SignalEventDeserializer
 @JsonDeserialize(using = SignalEventDeserializer::class)
 data class SignalData(
     @JsonProperty("channel_type")
-    val channelType: ChannelType,
+    val eventType: EventType,
     val type: SignalEventType,
     @JsonProperty("target_id") val targetId: String,
     @JsonProperty("author_id") val authorId: String,

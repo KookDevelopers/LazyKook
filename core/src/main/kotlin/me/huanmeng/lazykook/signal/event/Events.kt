@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.entity.*
+import me.huanmeng.lazykook.enums.ChannelType
 import me.huanmeng.lazykook.locateValue
 import kotlin.reflect.KProperty
 
@@ -256,6 +257,8 @@ data class ItemMessageExtraData(
 data class Reaction(
     @JsonProperty("channel_id")
     val channelId: String,
+    @JsonProperty("channel_type")
+    val eventType: ChannelType,
     val emoji: Emoji,
     @JsonProperty("user_id")
     val userId: String,
@@ -278,6 +281,8 @@ data class DeletedReactionExtraData(
 data class UpdateMessage(
     @JsonProperty("channel_id")
     val channelId: String,
+    @JsonProperty("channel_type")
+    val channelType: ChannelType,
     val content: String,
     val mention: Array<Any>,
     @JsonProperty("mention_roles")
@@ -331,6 +336,8 @@ data class UpdatedMessageExtraData(
 data class DeleteMessage(
     @JsonProperty("channel_id")
     val channelId: String,
+    @JsonProperty("channel_type")
+    val channelType: ChannelType,
     @JsonProperty("msg_id")
     val msgId: String,
     val mention: Array<Any>,
@@ -383,6 +390,8 @@ data class DeletedChannelExtraData(
 data class PinnedMessage(
     @JsonProperty("channel_id")
     val channelId: String,
+    @JsonProperty("channel_type")
+    val channelType: ChannelType,
     @JsonProperty("operator_id")
     val operatorId: String,
     @JsonProperty("msg_id")

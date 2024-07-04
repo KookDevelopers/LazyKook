@@ -1,11 +1,11 @@
-package me.huanmeng.lazykook.entity
+package me.huanmeng.lazykook.enums
 
 /**
  * 2024/4/18<br>
  * LazyKook<br>
  * @author huanmeng_qwq
  */
-enum class ChannelType {
+enum class EventType {
     GROUP,
     PERSON,
     BROADCAST,
