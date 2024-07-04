@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.entity.*
+import me.huanmeng.lazykook.enums.oauth.TokenType
 import me.huanmeng.lazykook.locateValue
 import kotlin.reflect.KProperty
 
@@ -134,6 +135,21 @@ data class MessageCreateResponse(
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
+// oauth
+data class OAuthTokenResponse(
+    @JsonProperty("access_token")
+    val accessToken: String,
+    @JsonProperty("expire_in")
+    val expireInSec: Long,
+    @JsonProperty("token_type")
+    val tokenType: TokenType,
+    /**
+     * 空格分割
+     */
+    val scope: String
+)
+
+// voice
 data class VoiceJoinResponse(
     val ip: String,
     val port: String,

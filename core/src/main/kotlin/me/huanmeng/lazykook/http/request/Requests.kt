@@ -1,6 +1,7 @@
 package me.huanmeng.lazykook.http.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import me.huanmeng.lazykook.enums.oauth.GrantType
 
 annotation class Comment(val value: String)
 
@@ -150,6 +151,18 @@ data class MessageDeleteRequest(
 data class MessageViewRequest(
     @JsonProperty("msg_id")
     val msgId: String,
+)
+
+data class OAuthTokenRequest(
+    @JsonProperty("grant_type")
+    val grantType: GrantType,
+    @JsonProperty("client_id")
+    val clientId: String,
+    @JsonProperty("client_secret")
+    val clientSecret: String,
+    val code: String,
+    @JsonProperty("redirect_uri")
+    val redirectUri: String,
 )
 
 data class VoiceJoinRequest(

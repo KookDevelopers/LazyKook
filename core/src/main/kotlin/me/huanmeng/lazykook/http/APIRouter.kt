@@ -158,6 +158,14 @@ object Requests {
         )
     }
 
+    object OAuth {
+        val TOKEN = APIRouter(
+            "/oauth2/token",
+            OAuthTokenRequest::class.java,
+            Any::class.java
+        )
+    }
+
     object Voice {
         val JOIN = APIRouter(
             "/voice/join",
