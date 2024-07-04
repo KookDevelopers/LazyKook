@@ -23,11 +23,12 @@ class UserImpl(private val user: UserData) : JUser {
     private val status: Any? by user
 
     @ByName("is_vip")
-    private val isVip: Boolean by user
+    private val _isVip: Boolean by user
 
     @ByName("bot")
-    private val isBot: Boolean by user
-    private val online: Boolean by user
+    private val _isBot: Boolean by user
+    @ByName("online")
+    private val _online: Boolean by user
 
     override fun getName(): String {
         return user.username
@@ -69,7 +70,7 @@ class UserImpl(private val user: UserData) : JUser {
     }
 
     override fun isOnline(): Boolean {
-        return online
+        return _online
     }
 
     override fun isBanned(): Boolean {

@@ -16,6 +16,14 @@ dependencies {
     implementation(project(":lazykook"))
 }
 
+tasks.shadowJar {
+    enabled = false
+}
+
+application {
+    mainClass = "unset"
+}
+
 tasks.test {
     useJUnitPlatform()
 }

@@ -59,7 +59,7 @@ abstract class AliveData<T>(private val key: String, id: String) {
     protected fun copyFrom(any: Any) {
         any::class.java.declaredFields.forEach {
             try {
-                it.trySetAccessible()
+                it.isAccessible = true
                 if (it.name == "unknownField" && it.type.isAssignableFrom(Map::class.java)) {
                     val map = it.get(any) as Map<*, *>
                     map.forEach { (key, value) ->
