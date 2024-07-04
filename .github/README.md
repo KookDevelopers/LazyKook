@@ -7,10 +7,24 @@
 > 
 > 当前项目可以使用，但是还存在许多未发现的问题，如果遇到请及时报告Issue
 
-### 讨论
+### 使用 Using
+
+```groovy
+implementation("com.huanmeng-qwq.lazykook:lazykook:0.1.0")
+```
+
+```xml
+<dependency>
+    <groupId>com.huanmeng-qwq.lazykook</groupId>
+    <artifactId>lazykook</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+
+### 讨论 Discussions
 加入[频道](https://kook.top/IO8ZBE)一起讨论更多支持
 
-### 测试
+### 测试 Test
 ```shell
 cd core
 mkdir run
