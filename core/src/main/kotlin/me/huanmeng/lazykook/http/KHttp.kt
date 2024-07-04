@@ -30,17 +30,25 @@ class KHttp(private val kook: LazyKook) {
         }
     }
 
-    private suspend fun get(path: String, vararg params: Pair<String, Any?>): String {
+    private suspend fun <T> get(
+        path: String,
+        vararg params: Pair<String, Any?>,
+        callback: (suspend HttpResponse.() -> T)
+    ): T {
         return client.get(config.url + path) {
             params.forEach {
                 if (it.second == null) return@forEach
                 parameter(it.first, it.second.toString())
             }
             token()
-        }.bodyAsText()
+        }.callback()
     }
 
-    private suspend fun post(path: String, vararg params: Pair<String, Any?>): String {
+    private suspend fun <T> post(
+        path: String,
+        vararg params: Pair<String, Any?>,
+        callback: (suspend HttpResponse.() -> T)
+    ): T {
         return client.submitForm(config.url + path) {
             token()
             setBody(
@@ -53,7 +61,7 @@ class KHttp(private val kook: LazyKook) {
                     }
                 )
             )
-        }.bodyAsText()
+        }.callback()
     }
 
     suspend fun <REQ : Any, RESP : Any> http(
@@ -65,11 +73,24 @@ class KHttp(private val kook: LazyKook) {
             mapper.readValue(mapper.writeValueAsString(request), object : TypeReference<Map<String, Any?>>() {})
         else emptyMap()
 
-        val responseJson = when (apiRouter.apiMethod) {
-            GET -> this::get
-            POST -> this::post
-        }(apiRouter.buildPath(), map.toPairs())
-        val response = mapper.readValue(responseJson, RootResponse::class.java) ?: throw RuntimeException(responseJson)
+        val responseObject = when (apiRouter.apiMethod) {
+            GET -> get(apiRouter.buildPath(), *map.toPairs()) {
+                apiRouter.responseHandler.invoke(this)
+            }
+
+            POST -> post(apiRouter.buildPath(), *map.toPairs()) {
+                apiRouter.responseHandler.invoke(this)
+            }
+        }
+        if (responseObject !is String) {
+            if (apiRouter.responseClass.isInstance(responseObject)) {
+                @Suppress("UNCHECKED_CAST")
+                return responseObject as RESP
+            }
+            throw HttpException("Error Object: $responseObject")
+        }
+        val response =
+            mapper.readValue(responseObject, RootResponse::class.java) ?: throw RuntimeException(responseObject)
 
         val dataJson = mapper.writeValueAsString(response.data)
         respCallback(dataJson)
@@ -78,7 +99,7 @@ class KHttp(private val kook: LazyKook) {
         } catch (e: Exception) {
             // {"code":401,"message":"系统检测到您的登录环境异常，为保证您的账号安全，请重新登录","data":{"name":"Unauthorized","status":401}}
             // {"code":500,"message":"系统错误","data":{"name":"Internal Server Error","status":500}}
-            throw HttpException(responseJson, e)
+            throw HttpException(responseObject, e)
         }
     }
 

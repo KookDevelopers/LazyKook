@@ -1,6 +1,7 @@
 package me.huanmeng.lazykook.http
 
 import com.fasterxml.jackson.databind.JsonNode
+import io.ktor.client.statement.*
 import me.huanmeng.lazykook.http.request.*
 import me.huanmeng.lazykook.http.response.*
 
@@ -22,6 +23,7 @@ data class APIRouter<REQ : Class<*>, RESP : Class<*>>(
     val apiMethod: HttpMethod = HttpMethod.POST,
     @get:JvmName("empty")
     val requestIsNull: Boolean = false,
+    val responseHandler: (suspend HttpResponse.() -> Any) = { bodyAsText() }
 ) {
     fun buildPath(): String {
         return version.versionPath + path
