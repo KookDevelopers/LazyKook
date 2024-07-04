@@ -5,7 +5,6 @@ import me.huanmeng.lazykook.BotTest
 import me.huanmeng.lazykook.http.Requests
 import me.huanmeng.lazykook.http.request.VoiceJoinRequest
 import me.huanmeng.lazykook.http.request.VoiceLeaveRequest
-import me.huanmeng.lazykook.http.request.VoiceListRequest
 import org.junit.jupiter.api.Test
 
 /**
