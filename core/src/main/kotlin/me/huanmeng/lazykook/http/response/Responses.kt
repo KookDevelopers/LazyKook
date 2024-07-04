@@ -146,3 +146,19 @@ data class VoiceJoinResponse(
 ) {
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
+
+data class VoiceChannelData(
+    @JsonProperty("guild_id")
+    val guildId: String,
+    @JsonProperty("_id")
+    val channelId: String,
+    val name: String,
+    @JsonProperty("parent_id")
+    val parentChannelId: String
+)
+
+data class VoiceListResponse(
+    override val items: List<VoiceChannelData>,
+    override val meta: PageMeta,
+    override val sort: Map<String, Int>? = null
+) : PageResponse<VoiceChannelData>(items, meta, sort)

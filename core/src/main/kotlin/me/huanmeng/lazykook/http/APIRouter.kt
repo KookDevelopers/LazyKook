@@ -169,5 +169,11 @@ object Requests {
             VoiceLeaveRequest::class.java,
             Any::class.java,
         )
+        val LIST = APIRouter(
+            "/voice/list",
+            VoiceListRequest::class.java,
+            VoiceListResponse::class.java,
+            apiMethod = HttpMethod.GET
+        )
     }
 }
