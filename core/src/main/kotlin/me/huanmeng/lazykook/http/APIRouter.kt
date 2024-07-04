@@ -158,6 +158,14 @@ object Requests {
         )
     }
 
+    object ChannelUser {
+        val GET_JOINED_CHANNEL = APIRouter(
+            "/channel-user/get-joined-channel",
+            JoinedChannelRequest::class.java,
+            JoinedChannelResponse::class.java,
+        )
+    }
+
     object OAuth {
         val TOKEN = APIRouter(
             "/oauth2/token",

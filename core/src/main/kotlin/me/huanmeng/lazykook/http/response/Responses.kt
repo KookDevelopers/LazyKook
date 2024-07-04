@@ -135,6 +135,13 @@ data class MessageCreateResponse(
     operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
 }
 
+// channel-user
+data class JoinedChannelResponse(
+    override val items: List<Channel>,
+    override val meta: PageMeta,
+    override val sort: Map<String, Int>? = null
+) : PageResponse<Channel>(items, meta, sort)
+
 // oauth
 data class OAuthTokenResponse(
     @JsonProperty("access_token")

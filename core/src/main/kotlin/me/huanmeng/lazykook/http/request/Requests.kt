@@ -152,7 +152,18 @@ data class MessageViewRequest(
     @JsonProperty("msg_id")
     val msgId: String,
 )
+// channel-user
+data class JoinedChannelRequest(
+    @JsonProperty("guild_id")
+    val guildId: String,
+    @JsonProperty("user_id")
+    val userId: String,
+    val page: Int = 1,
+    @JsonProperty("page_size")
+    val pageSize: Int = 20,
+)
 
+// oauth
 data class OAuthTokenRequest(
     @JsonProperty("grant_type")
     val grantType: GrantType,
@@ -165,6 +176,7 @@ data class OAuthTokenRequest(
     val redirectUri: String,
 )
 
+// voice
 data class VoiceJoinRequest(
     @JsonProperty("channel_id")
     val channelId: String,
