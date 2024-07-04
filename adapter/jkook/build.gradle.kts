@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    implementation("com.github.SNWCreations:JKook:0.50.0")
+    implementation(libs.jkook)
     implementation(project(":core"))
 }
 

@@ -1,0 +1,18 @@
+[versions]
+logback = "1.5.6"
+jackson = "2.17.+"
+yamlconfiguration = "2.0.2"
+event = "1.0.4"
+guava = "33.2.1-jre"
+jkook = "0.50.0"
+[libraries]
+
+logback = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+jackson-kt = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
+yamlconfiguration = { group = "org.bspfsystems", name = "yamlconfiguration", version.ref = "yamlconfiguration" }
+event-core = { group = "com.huanmeng-qwq", name = "event-core", version.ref = "event" }
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+jkook = { group = "com.github.SNWCreations", name = "JKook", version.ref = "jkook" }
+
+indra = { module = "net.kyori:indra-common", version = "3.1.3" }
+
