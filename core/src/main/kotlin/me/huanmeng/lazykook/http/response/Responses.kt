@@ -142,6 +142,9 @@ data class JoinedChannelResponse(
     override val sort: Map<String, Int>? = null
 ) : PageResponse<Channel>(items, meta, sort)
 
+// badge
+data class BadgeSvg(val content: String)
+
 // oauth
 data class OAuthTokenResponse(
     @JsonProperty("access_token")

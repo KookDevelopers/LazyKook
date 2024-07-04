@@ -2,6 +2,7 @@ package me.huanmeng.lazykook.http
 
 import com.fasterxml.jackson.databind.JsonNode
 import io.ktor.client.statement.*
+import io.ktor.utils.io.*
 import me.huanmeng.lazykook.http.request.*
 import me.huanmeng.lazykook.http.response.*
 
@@ -165,6 +166,18 @@ object Requests {
             "/channel-user/get-joined-channel",
             JoinedChannelRequest::class.java,
             JoinedChannelResponse::class.java,
+        )
+    }
+
+    object Badge {
+        val GUILD = APIRouter(
+            "/badge/guild",
+            BadgeGuildRequest::class.java,
+            BadgeSvg::class.java,
+            apiMethod = HttpMethod.GET,
+            responseHandler = {
+                BadgeSvg(bodyAsChannel().readUTF8Line()!!)
+            }
         )
     }
 

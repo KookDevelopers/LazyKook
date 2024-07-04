@@ -1,6 +1,7 @@
 package me.huanmeng.lazykook.http.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import me.huanmeng.lazykook.enums.badge.BadgeStyle
 import me.huanmeng.lazykook.enums.oauth.GrantType
 
 annotation class Comment(val value: String)
@@ -161,6 +162,13 @@ data class JoinedChannelRequest(
     val page: Int = 1,
     @JsonProperty("page_size")
     val pageSize: Int = 20,
+)
+
+// badge
+data class BadgeGuildRequest(
+    @JsonProperty("guild_id")
+    val guildId: String,
+    val style: BadgeStyle
 )
 
 // oauth
