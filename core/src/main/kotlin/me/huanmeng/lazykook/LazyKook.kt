@@ -6,6 +6,7 @@ import me.huanmeng.lazykook.http.KHttp
 import me.huanmeng.lazykook.http.Requests
 import me.huanmeng.lazykook.http.request.GatewayRequest
 import me.huanmeng.lazykook.service.StorageService
+import me.huanmeng.lazykook.webhook.WebHookServer
 import me.huanmeng.lazykook.ws.WebSocketClient
 
 /**
@@ -26,9 +27,16 @@ open class LazyKook(val config: BotConfig) {
             return
         }
         isRunning = true
+        when (config.mode) {
+            me.huanmeng.lazykook.config.SocketMode.WEBSOCKET -> {
+                val resp = http.http(Requests.GATEWAY, GatewayRequest())
+                WebSocketClient(resp.url, this).start()
+            }
 
-        val resp = http.http(Requests.GATEWAY, GatewayRequest())
-        WebSocketClient(resp.url, this).start()
+            me.huanmeng.lazykook.config.SocketMode.WEBHOOK -> {
+                WebHookServer(this).start()
+            }
+        }
     }
 
     fun stop() {
