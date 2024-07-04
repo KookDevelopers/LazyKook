@@ -141,5 +141,8 @@ data class VoiceJoinResponse(
     val rtcp_port: Int,
     val bitrate: Int,
     val audio_ssrc: String,
-    val audio_pt: String
-)
+    val audio_pt: String,
+    val unknownField: MutableMap<String, Any?> = hashMapOf()
+) {
+    operator fun <V, V1 : V> getValue(thisRef: Any?, property: KProperty<*>): V1 = locateValue(unknownField, property)
+}
