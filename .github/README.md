@@ -31,3 +31,9 @@ mkdir run
 echo "token: xxx" > run/config.yml
 gradlew test
 ```
+
+### 构建 Building
+最终产物在`./core/build/libs`文件夹中
+```shell
+gradlew target
+```

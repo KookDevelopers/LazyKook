@@ -90,3 +90,11 @@ tasks.sonatypeCentralUpload {
     archives = project.layout.buildDirectory.dir("libs").get().asFileTree
     pom = file(project.layout.buildDirectory.file("publications/maven/pom-default.xml"))
 }
+
+tasks.test {
+    onlyIf { !gradle.startParameter.taskNames.contains("sonatypeCentralUpload") }
+}
+
+tasks.findByName("shadowJar")?.apply {
+    onlyIf { !gradle.startParameter.taskNames.contains("sonatypeCentralUpload") }
+}

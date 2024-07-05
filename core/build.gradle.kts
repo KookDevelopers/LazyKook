@@ -10,14 +10,6 @@ repositories {
     maven("https://jitpack.io")
 }
 
-tasks.test {
-    enabled = false
-}
-
-tasks.shadowJar {
-    enabled = false
-}
-
 application {
     mainClass = "unset"
 }
