@@ -37,6 +37,7 @@ dependencies {
         exclude(group = "com.google.guava")
     }
     api(libs.guava)
+    api(libs.hutool.core)
 }
 val codegenTask = tasks.create("codegen") {
     group = "LazyKook"

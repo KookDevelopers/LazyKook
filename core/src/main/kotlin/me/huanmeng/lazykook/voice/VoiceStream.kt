@@ -15,12 +15,15 @@ import java.io.InputStream
  * @author huanmeng_qwq
  */
 @Suppress("MemberVisibilityCanBePrivate")
-open class VoiceStream(private val ffmpegExecutable: String, private val bot: LazyKook, private val channelId: String) :
+open class VoiceStream(
+    protected val ffmpegExecutable: String,
+    protected val bot: LazyKook,
+    protected val channelId: String
+) :
     AutoCloseable {
     var executor: Process? = null
-    private var requestSkip: Boolean = false
 
-    protected fun buildArgument(res: VoiceJoinResponse): String {
+    protected open fun buildArgument(res: VoiceJoinResponse): String {
         val rtpUri = "rtp://${res.ip}:${res.port}".let {
             if (res.port.toInt() == res.rtcp_port) it else it + "?rtcpport=${res.rtcp_port}"
         }
@@ -31,13 +34,9 @@ open class VoiceStream(private val ffmpegExecutable: String, private val bot: La
         return args
     }
 
-    suspend fun addAudio(bytes: ByteArray) {
+    open suspend fun addAudio(bytes: ByteArray) {
         checkInit {
             for (byte in bytes) {
-                if (requestSkip) {
-                    requestSkip = false
-                    return@checkInit
-                }
                 outputStream.write(byte.toInt())
             }
         }
@@ -52,19 +51,19 @@ open class VoiceStream(private val ffmpegExecutable: String, private val bot: La
         addAudio(file.readBytes())
     }
 
-    private suspend fun checkInit(then: (Process.() -> Unit)) {
+    protected open suspend fun checkInit(then: (Process.() -> Unit)) {
         if (executor != null) {
             executor!!.then()
             return
         }
         runBlocking {
             val res = bot.http.http(Requests.Voice.JOIN, VoiceJoinRequest(channelId))
-            val cmd = ("\"${ffmpegExecutable}\" " + buildArgument(res)).split(" ").toTypedArray()
-            executor = Runtime.getRuntime().exec(cmd).also(then)
+            val executorCmd = ("\"${ffmpegExecutable}\" " + buildArgument(res)).split(" ").toTypedArray()
+            executor = Runtime.getRuntime().exec(executorCmd).also(then)
         }
     }
 
-    suspend fun leaveChannel() {
+    open suspend fun leaveChannel() {
         if (executor == null) {
             return
         }
@@ -77,9 +76,5 @@ open class VoiceStream(private val ffmpegExecutable: String, private val bot: La
         runBlocking {
             leaveChannel()
         }
-    }
-
-    fun skip() {
-        requestSkip = true
     }
 }
