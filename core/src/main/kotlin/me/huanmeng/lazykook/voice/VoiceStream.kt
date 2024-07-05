@@ -54,14 +54,6 @@ open class VoiceStream(private val ffmpegExecutable: String, private val bot: La
             val res = bot.http.http(Requests.Voice.JOIN, VoiceJoinRequest(channelId))
             val cmd = ("\"${ffmpegExecutable}\" " + buildArgument(res)).split(" ").toTypedArray()
             executor = Runtime.getRuntime().exec(cmd).also(then)
-            object : Thread({
-                val exit = executor?.waitFor()
-                if (exit == 0) {
-                    runBlocking {
-                        leaveChannel()
-                    }
-                }
-            }) {}.start()
         }
     }
 

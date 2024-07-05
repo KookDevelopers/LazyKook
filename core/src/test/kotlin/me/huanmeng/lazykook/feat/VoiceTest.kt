@@ -18,15 +18,16 @@ class VoiceTest : BotTest() {
     @Test
     fun join(): Unit = runBlocking {
         val file = File("C:\\Users\\huanmeng\\Downloads\\Music\\千本樱.mp3")
-        val stream = VoiceStream("ffmpeg", bot, "3085835434214897")
+        val stream = VoiceStream("ffmpeg", bot, "3969811811750970")
         stream.addAudio(file)
         stream.addAudio(file)
         stream.addAudio(file)
+        stream.close()
     }
 
     @Test
     fun leave(): Unit = runBlocking {
-        val res = bot.http.http(Requests.Voice.LEAVE, VoiceLeaveRequest("39698118117509700"))
+        val res = bot.http.http(Requests.Voice.LEAVE, VoiceLeaveRequest("3969811811750970"))
         println(res)
     }
 
