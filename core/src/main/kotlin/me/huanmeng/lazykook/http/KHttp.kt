@@ -99,7 +99,7 @@ class KHttp(private val kook: LazyKook) {
         } catch (e: Exception) {
             // {"code":401,"message":"系统检测到您的登录环境异常，为保证您的账号安全，请重新登录","data":{"name":"Unauthorized","status":401}}
             // {"code":500,"message":"系统错误","data":{"name":"Internal Server Error","status":500}}
-            throw HttpException(responseObject, e)
+            throw HttpException(responseObject + "${kook.config}", e)
         }
     }
 
