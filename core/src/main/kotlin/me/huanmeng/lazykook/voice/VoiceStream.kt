@@ -61,7 +61,6 @@ open class VoiceStream(private val ffmpegExecutable: String, private val bot: La
         if (executor == null) {
             return
         }
-        println("Leaving channel")
         executor?.destroy()
         executor = null
         bot.http.http(Requests.Voice.LEAVE, VoiceLeaveRequest(channelId))
