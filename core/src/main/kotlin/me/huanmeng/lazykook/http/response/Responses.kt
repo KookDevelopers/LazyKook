@@ -176,7 +176,7 @@ data class VoiceJoinResponse(
 data class VoiceChannelData(
     @JsonProperty("guild_id")
     val guildId: String,
-    @JsonProperty("_id")
+    @JsonProperty("id")
     val channelId: String,
     val name: String,
     @JsonProperty("parent_id")
