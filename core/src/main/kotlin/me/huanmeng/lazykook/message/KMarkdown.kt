@@ -29,19 +29,21 @@ data class KMarkdownContent(
                     if (input.startsWith(type.prefix, currentIndex)) {
                         val endPrefixIndex = currentIndex + type.prefix.length
                         val endIndex = if (type.suffix.isNotEmpty() || type.attributeSuffix?.isNotEmpty() == true) {
-                            val s = if(type.suffix.isEmpty() && type.attributeSuffix!=null) type.attributeSuffix else type.suffix
+                            val s =
+                                if (type.suffix.isEmpty() && type.attributeSuffix != null) type.attributeSuffix else type.suffix
                             input.indexOf(s, endPrefixIndex) + s.length
                         } else {
                             endPrefixIndex
                         }
 
                         if (endIndex >= endPrefixIndex) {
-                            val s = if(type.suffix.isEmpty() && type.attributeSuffix!=null) type.attributeSuffix else type.suffix
+                            val s =
+                                if (type.suffix.isEmpty() && type.attributeSuffix != null) type.attributeSuffix else type.suffix
                             val content = input.substring(endPrefixIndex, endIndex - s.length)
                             var attribute: String? = null
 
                             // 如果类型具有属性前后缀，则尝试解析属性
-                            if (type.attributePrefix != null && type.attributeSuffix != null && type!=KMarkdownType.CODE_BLOCK) {
+                            if (type.attributePrefix != null && type.attributeSuffix != null && type != KMarkdownType.CODE_BLOCK) {
                                 val startAttributeIndex = content.lastIndexOf(type.attributePrefix)
                                 if (startAttributeIndex != -1) {
                                     val endAttributeIndex = content.indexOf(
@@ -149,8 +151,8 @@ enum class KMarkdownType(
             }
 
             KMarkdownCodeType.APPEND_CONTENT -> "$prefix$content$suffix".let {
-                if (attribute != null && attributePrefix != null && attributeSuffix != null) {
-                    "$it$attributePrefix$attribute$attributeSuffix"
+                if ((attribute != null || this == CODE_BLOCK) && attributePrefix != null && attributeSuffix != null) {
+                    "$it$attributePrefix${attribute?:""}$attributeSuffix"
                 } else it
             }
         }
