@@ -95,6 +95,9 @@ tasks.test {
     onlyIf { !gradle.startParameter.taskNames.contains("sonatypeCentralUpload") }
 }
 
-tasks.findByName("shadowJar")?.apply {
-    onlyIf { !gradle.startParameter.taskNames.contains("sonatypeCentralUpload") }
+project.afterEvaluate {
+    tasks.findByName("shadowJar")?.apply {
+        onlyIf { !gradle.startParameter.taskNames.contains("sonatypeCentralUpload") }
+    }
 }
+
