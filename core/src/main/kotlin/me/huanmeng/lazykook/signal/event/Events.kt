@@ -11,8 +11,8 @@ import kotlin.reflect.KProperty
 // message
 sealed class StringMessageExtraData(
     open val type: SignalEventType,
-    @JsonProperty("guild_id") open val guildId: String,
-    @JsonProperty("channel_name") open val channelName: String,
+    @JsonProperty("guild_id") open val guildId: String?,
+    @JsonProperty("channel_name") open val channelName: String?,
     open val mention: Array<Any>,
     @JsonProperty("mention_all") open val mentionAll: Boolean,
     @JsonProperty("mention_roles") open val mentionRoles: Array<Any>,
@@ -23,9 +23,9 @@ sealed class StringMessageExtraData(
 data class TextMessageExtraData(
     override val type: SignalEventType,
     @JsonProperty("guild_id")
-    override val guildId: String,
+    override val guildId: String?,
     @JsonProperty("channel_name")
-    override val channelName: String,
+    override val channelName: String?,
     override val mention: Array<Any>,
     @JsonProperty("mention_all")
     override val mentionAll: Boolean,
@@ -75,7 +75,7 @@ sealed class ResourceMessageExtraData(
     open val type: SignalEventType,
     open val code: String?,
     @JsonProperty("guild_id")
-    open val guildId: String,
+    open val guildId: String?,
     open val attachments: Attachments,
     open val author: User,
 ) : SignalExtraData()
@@ -112,7 +112,7 @@ data class FileMessageExtraData(
     override val type: SignalEventType,
     override val code: String,
     @JsonProperty("guild_id")
-    override val guildId: String,
+    override val guildId: String?,
     override val attachments: Attachments,
     override val author: User,
     @field:JsonAnySetter
@@ -125,9 +125,9 @@ data class FileMessageExtraData(
 data class KMarkdownMessageExtraData(
     override val type: SignalEventType,
     @JsonProperty("guild_id")
-    override val guildId: String,
+    override val guildId: String?,
     @JsonProperty("channel_name")
-    override val channelName: String,
+    override val channelName: String?,
     override val mention: Array<Any>,
     @JsonProperty("mention_all")
     override val mentionAll: Boolean,
@@ -186,9 +186,9 @@ data class KMarkdownMessageExtraData(
 data class CardMessageExtraData(
     override val type: SignalEventType,
     @JsonProperty("guild_id")
-    override val guildId: String,
+    override val guildId: String?,
     @JsonProperty("channel_name")
-    override val channelName: String,
+    override val channelName: String?,
     override val mention: Array<Any>,
     @JsonProperty("mention_all")
     override val mentionAll: Boolean,
