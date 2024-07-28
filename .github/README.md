@@ -25,6 +25,10 @@
 ### 讨论
 加入[频道](https://kook.top/IO8ZBE)一起讨论更多支持
 
+> [!NOTE]
+> 当前版本不包含对各类组件的快速操作，仅提供了最底层的事件监听、API请求、事件通讯、消息解析、语音播放流，获取User/Guild/Channel/Role。
+
+
 ### 成分
 - [Kotlin](https://kotlinlang.org): 一个由Jetbrains公司开发的编程语言，对Java有着良好的兼容性，包含对Java友好的API
 - [Ktor](https://ktor.io) 是基于**Kotlin**和 **Kotlin Coroutines**从头开始构建的。可以使用简洁的多平台语言，以及具有直观命令式流程的异步编程的强大功能。
