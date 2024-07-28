@@ -124,7 +124,7 @@ enum class KMarkdownType(
     STRIKE("~~"), // 删除线
     LINK("[", "]", "(", ")", hasChild = false), // 链接
     DIVIDER("---", "", type = KMarkdownCodeType.NO_CONTENT, hasChild = false), // 分割线
-    QUOTE("> ", ""), // 引用
+    QUOTE("> ", "\n\n"), // 引用
     UNDERLINE("(ins)"), // 下划线
     SPOILER("(spl)"), // 剧透
     EMOJI(":", hasChild = false), // emoji
