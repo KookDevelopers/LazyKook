@@ -142,6 +142,11 @@ data class JoinedChannelResponse(
     override val sort: Map<String, Int>? = null
 ) : PageResponse<Channel>(items, meta, sort)
 
+// direct-message
+/*data class DirectMessageViewResponse(
+
+)*/
+
 // badge
 data class BadgeSvg(val content: String)
 

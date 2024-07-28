@@ -169,6 +169,19 @@ object Requests {
         )
     }
 
+    object DirectMessage {
+        val CREATE = APIRouter(
+            "/direct-message/create",
+            DirectMessageCreateRequest::class.java,
+            MessageCreateResponse::class.java
+        )
+        val VIEW = APIRouter(
+            "/direct-message/view",
+            DirectMessageViewRequest::class.java,
+            JsonNode::class.java
+        )
+    }
+
     object Badge {
         val GUILD = APIRouter(
             "/badge/guild",

@@ -3,6 +3,8 @@ package me.huanmeng.lazykook.http.request
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.enums.badge.BadgeStyle
 import me.huanmeng.lazykook.enums.oauth.GrantType
+import me.huanmeng.lazykook.message.TextType
+import me.huanmeng.lazykook.signal.event.SignalEventType
 
 annotation class Comment(val value: String)
 
@@ -153,6 +155,7 @@ data class MessageViewRequest(
     @JsonProperty("msg_id")
     val msgId: String,
 )
+
 // channel-user
 data class JoinedChannelRequest(
     @JsonProperty("guild_id")
@@ -162,6 +165,25 @@ data class JoinedChannelRequest(
     val page: Int = 1,
     @JsonProperty("page_size")
     val pageSize: Int = 20,
+)
+
+// direct-message
+data class DirectMessageCreateRequest(
+    val type: SignalEventType = SignalEventType.KMARKDOWN,
+    @JsonProperty("target_id")
+    val userId: String?,
+    val content: String,
+    val quote: String? = null,
+    val nonce: String? = null,
+    @JsonProperty("chat_code")
+    val chatCode: String? = null
+)
+
+data class DirectMessageViewRequest(
+    @JsonProperty("chat_code")
+    val chatCode: String,
+    @JsonProperty("msg_id")
+    val msgId: String
 )
 
 // badge
