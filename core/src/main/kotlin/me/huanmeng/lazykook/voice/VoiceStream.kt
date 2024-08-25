@@ -30,15 +30,13 @@ open class VoiceStream(
         val b = res.bitrate / 1000
         val bitrate = if (b > 48) 48 else b - 20
         val args =
-            "-re -stream_loop -1 -i - -map 0:a:0 -acodec libopus -ab ${bitrate}k -ac 2 -ar ${bitrate * 1000} -filter:a volume=0.8 -f tee '[select=a:f=rtp:ssrc=${res.audio_ssrc}:payload_type=${res.audio_pt}]${rtpUri}'"
+            "-re -stream_loop -1 -i - -map 0:a:0 -acodec libopus -ab ${bitrate}k -ac 2 -ar ${bitrate * 1000} -filter:a volume=0.8 -f tee [select=a:f=rtp:ssrc=${res.audio_ssrc}:payload_type=${res.audio_pt}]${rtpUri}"
         return args
     }
 
     open suspend fun addAudio(bytes: ByteArray) {
         checkInit {
-            for (byte in bytes) {
-                outputStream.write(byte.toInt())
-            }
+            outputStream.write(bytes)
         }
     }
 

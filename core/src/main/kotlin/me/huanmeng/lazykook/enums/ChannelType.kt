@@ -8,5 +8,5 @@ import com.fasterxml.jackson.annotation.JsonValue
  * @author huanmeng_qwq
  */
 enum class ChannelType(@JsonValue val value: Int) {
-    TEXT(1),VOICE(2),
+    TEXT(1), VOICE(2),
 }

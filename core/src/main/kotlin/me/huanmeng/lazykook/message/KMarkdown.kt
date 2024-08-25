@@ -152,7 +152,7 @@ enum class KMarkdownType(
 
             KMarkdownCodeType.APPEND_CONTENT -> "$prefix$content$suffix".let {
                 if ((attribute != null || this == CODE_BLOCK) && attributePrefix != null && attributeSuffix != null) {
-                    "$it$attributePrefix${attribute?:""}$attributeSuffix"
+                    "$it$attributePrefix${attribute ?: ""}$attributeSuffix"
                 } else it
             }
         }

@@ -4,7 +4,7 @@ import kotlinx.coroutines.runBlocking
 import me.huanmeng.lazykook.BotTest
 import me.huanmeng.lazykook.http.Requests
 import me.huanmeng.lazykook.http.request.VoiceLeaveRequest
-import me.huanmeng.lazykook.voice.VoiceStream
+import me.huanmeng.lazykook.voice.PlaylistStream
 import java.io.File
 import kotlin.test.Test
 
@@ -17,11 +17,19 @@ class VoiceTest : BotTest() {
 
     @Test
     fun join(): Unit = runBlocking {
-        val file = File("C:\\Users\\huanmeng\\Downloads\\Music\\千本樱.mp3")
-        val stream = VoiceStream("ffmpeg", bot, "3969811811750970")
-        stream.addAudio(file)
-        stream.addAudio(file)
-        stream.addAudio(file)
+        val stream = PlaylistStream("ffmpeg", bot, "7507759824750561")
+        var index = 0
+        while (true) {
+            val dir = File("C:\\Users\\huanmeng\\Downloads\\Music")
+            val def = arrayOf(File("C:\\Users\\huanmeng\\Downloads\\Music\\千本樱.mp3"))
+            val listFiles = dir.listFiles()?.let {
+                if (it.isEmpty()) def else it
+            } ?: def
+            val file = listFiles[index % listFiles.size]
+            ++index
+            println(file.absolutePath)
+            stream.addAudio(file)
+        }
         stream.close()
     }
 

@@ -3,7 +3,6 @@ package me.huanmeng.lazykook.http.request
 import com.fasterxml.jackson.annotation.JsonProperty
 import me.huanmeng.lazykook.enums.badge.BadgeStyle
 import me.huanmeng.lazykook.enums.oauth.GrantType
-import me.huanmeng.lazykook.message.TextType
 import me.huanmeng.lazykook.signal.event.SignalEventType
 
 annotation class Comment(val value: String)
