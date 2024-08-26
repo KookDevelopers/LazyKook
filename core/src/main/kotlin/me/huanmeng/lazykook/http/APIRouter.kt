@@ -220,5 +220,10 @@ object Requests {
             apiMethod = HttpMethod.GET,
             requestIsNull = true
         )
+        val KEEP_ALIVE = APIRouter(
+            "/voice/keep-alive",
+            VoiceKeepAliveRequest::class.java,
+            Any::class.java,
+        )
     }
 }

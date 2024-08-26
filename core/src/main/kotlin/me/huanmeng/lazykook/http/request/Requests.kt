@@ -222,3 +222,8 @@ data class VoiceLeaveRequest(
     @JsonProperty("channel_id")
     val channelId: String,
 )
+
+data class VoiceKeepAliveRequest(
+    @JsonProperty("channel_id")
+    val channelId: String,
+)
