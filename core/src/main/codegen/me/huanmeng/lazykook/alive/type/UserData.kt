@@ -49,7 +49,6 @@ class UserData(id: String) : AliveData<UserData>("id", id) {
         copyFrom(t)
     }
 
-
     override fun update(data: UserData) {
     }
 }

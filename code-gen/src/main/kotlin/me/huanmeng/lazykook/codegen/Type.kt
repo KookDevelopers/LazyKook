@@ -55,6 +55,12 @@ data class Type(val text: String) {
             INT.addConvertTo(STRING) {
                 append(".toString()")
             }
+            STRING.addConvertTo(INT) {
+                append(".toString().toInt()")
+            }
+            INT.addConvertTo(BOOLEAN) {
+                append(".toString().toInt() == 1")
+            }
         }
     }
 }

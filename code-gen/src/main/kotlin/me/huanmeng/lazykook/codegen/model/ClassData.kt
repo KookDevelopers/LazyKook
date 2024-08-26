@@ -61,8 +61,11 @@ data class ClassData(
             writer.appendLine()
         }
 
-        methods.forEach {
-            it.write(writer)
+        methods.forEachIndexed { index, methodData ->
+            methodData.write(writer)
+            if (index != methods.size - 1) {
+                writer.appendLine()
+            }
         }
     }
 }

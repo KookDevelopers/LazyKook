@@ -15,7 +15,6 @@ class ChannelData(id: String) : AliveData<ChannelData>("id", id) {
         copyFrom(t)
     }
 
-
     override fun update(data: ChannelData) {
     }
 }

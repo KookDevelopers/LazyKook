@@ -1,0 +1,10 @@
+{
+  "class": "GuildData",
+  "guildId": {
+    "type": "string",
+    "id": true
+  },
+  "name": {
+    "type": "string"
+  }
+}

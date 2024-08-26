@@ -1,7 +1,7 @@
 package me.huanmeng.lazykook.jkook.entity
 
-import me.huanmeng.lazykook.entity.Role
-import me.huanmeng.lazykook.http.Requests
+import kotlinx.coroutines.runBlocking
+import me.huanmeng.lazykook.LazyKook
 import me.huanmeng.lazykook.jkook.JGuild
 import me.huanmeng.lazykook.jkook.JRole
 import snw.jkook.Permission
@@ -11,7 +11,13 @@ import snw.jkook.Permission
  * LazyKook<br>
  * @author huanmeng_qwq
  */
-class RoleImpl(val role: Role, guild: Requests.Guild) : JRole {
+class RoleImpl(bot: LazyKook, guildId: String, id: String) : JRole {
+    val role by lazy {
+        runBlocking {
+            bot.storageService.findRole(guildId, id)
+        }
+    }
+
     override fun getName(): String {
         return role.name
     }
@@ -37,11 +43,11 @@ class RoleImpl(val role: Role, guild: Requests.Guild) : JRole {
     }
 
     override fun isMentionable(): Boolean {
-        return role.mentionable == 1
+        return role.mentionable
     }
 
     override fun isHoist(): Boolean {
-        return role.hoist == 1
+        return role.hoist
     }
 
     override fun setMentionable(value: Boolean) {

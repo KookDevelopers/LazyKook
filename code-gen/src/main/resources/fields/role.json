@@ -1,0 +1,37 @@
+{
+  "class": "RoleData",
+  "id": {
+    "type": "string"
+  },
+  "roleId": {
+    "type": "int",
+    "supportTypes": [
+      "string",
+      "int"
+    ]
+  },
+  "name": {
+    "type": "string"
+  },
+  "color": {
+    "type": "int"
+  },
+  "position": {
+    "type": "int"
+  },
+  "hoist": {
+    "type": "bool",
+    "supportTypes": [
+      "int"
+    ]
+  },
+  "mentionable": {
+    "type": "bool",
+    "supportTypes": [
+      "int"
+    ]
+  },
+  "permissions": {
+    "type": "int"
+  }
+}

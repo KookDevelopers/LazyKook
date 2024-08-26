@@ -1,0 +1,16 @@
+{
+  "update": [
+    {
+      "class": "me.huanmeng.lazykook.entity.Guild",
+      "type": "COPY_FROM"
+    },
+    {
+      "class": "me.huanmeng.lazykook.entity.GuildInfo",
+      "type": "COPY_FROM"
+    },
+    {
+      "class": "me.huanmeng.lazykook.http.response.GuildViewResponse",
+      "type": "COPY_FROM"
+    }
+  ]
+}

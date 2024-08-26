@@ -1,11 +1,15 @@
 {
   "fields": [
     "user",
-    "channel"
+    "channel",
+    "role",
+    "guild"
   ],
   "methods": {
     "user": "user",
-    "channel": "channel"
+    "channel": "channel",
+    "role": "role",
+    "guild": "guild"
   },
   "extra": {
     "user": "user"

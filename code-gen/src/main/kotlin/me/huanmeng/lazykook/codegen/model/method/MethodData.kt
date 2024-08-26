@@ -13,6 +13,5 @@ data class MethodData(
         sb.appendLine("\tfun $name {")
         sb.appendLine("\t\t$body")
         sb.appendLine("\t}")
-        sb.appendLine()
     }
 }

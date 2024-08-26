@@ -1,0 +1,8 @@
+{
+  "update": [
+    {
+      "class": "me.huanmeng.lazykook.entity.Role",
+      "type": "COPY_FROM"
+    }
+  ]
+}
