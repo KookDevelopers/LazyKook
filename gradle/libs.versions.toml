@@ -1,7 +1,7 @@
 [versions]
 logback = "1.5.8"
 jackson = "2.18.0"
-yamlconfiguration = "2.0.2"
+yamlconfiguration = "3.0.1"
 event = "1.0.4"
 guava = "33.3.0-jre"
 jkook = "0.50.0"
