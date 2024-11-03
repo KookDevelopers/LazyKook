@@ -1,5 +1,5 @@
 [versions]
-logback = "1.5.11"
+logback = "1.5.12"
 jackson = "2.18.1"
 yamlconfiguration = "2.0.2"
 event = "1.0.4"
