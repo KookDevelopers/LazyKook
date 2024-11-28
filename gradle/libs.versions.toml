@@ -1,6 +1,6 @@
 [versions]
 logback = "1.5.12"
-jackson = "2.18.1"
+jackson = "2.18.2"
 yamlconfiguration = "2.0.2"
 event = "1.0.4"
 guava = "33.3.1-jre"
